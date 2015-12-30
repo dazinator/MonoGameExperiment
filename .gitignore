@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/Craftopia/bin/Windows/Debug
+/src/Craftopia/Content/bin/Windows
+/src/Craftopia/Content/obj/Windows
+/src/Craftopia/obj/x86/Debug
+/src/Craftopia/packages/Autofac.3.5.2

@@ -48,11 +48,7 @@ namespace Craftopia
             _resolver = _resolverProvider.GetResolver(this);
             _spriteBatch = Resolve<ISpriteBatch>();
             _spaceShip = Resolve<ISpaceShip>();
-            _scoreBoard = Resolve<IScoreBoard>();
-
-            //background = Content.Load<Texture2D>("Images/stars"); // change these names to the names of your images
-            //shuttle = Content.Load<Texture2D>("Images/shuttle");  // if you are using your own images.
-            //earth = Content.Load<Texture2D>("Images/earth");
+            _scoreBoard = Resolve<IScoreBoard>();         
 
         }
 
