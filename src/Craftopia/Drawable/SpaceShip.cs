@@ -6,46 +6,26 @@ using Microsoft.Xna.Framework;
 namespace Craftopia.Drawable
 {
     [Register]
-    public class SpaceShip : ISpaceShip
+    public class SpaceShip : BaseDrawable, ISpaceShip
     {
 
-        private ITexture2D _texture;
-        private ISpriteBatch _spriteBatch;
+        private ITexture2D _texture;       
 
-        public SpaceShip(IContentManager content, ISpriteBatch spriteBatch) 
+        public SpaceShip(IContentManager content) 
         {
-            _texture = content.LoadTexture2D("Images/shuttle");  // if you are using your own images.
-            _spriteBatch = spriteBatch;
+            _texture = content.LoadTexture2D("Images/shuttle");  // if you are using your own images.           
             Position = new Vector2(450, 240);
             Color = Color.White;
         }
 
         public Color Color { get; set; }
 
-        public int DrawOrder
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
         public Vector2 Position { get; set; }
 
-        public bool Visible
+        public override void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
         {
-            get
-            {
-                return true;
-            }
+            spriteBatch.Draw(_texture, Position, Color);
         }
-
-        public event EventHandler<EventArgs> DrawOrderChanged;
-        public event EventHandler<EventArgs> VisibleChanged;
-
-        public void Draw(GameTime gameTime)
-        {
-            _spriteBatch.Draw(_texture, Position, Color);
-        }
+      
     }
 }

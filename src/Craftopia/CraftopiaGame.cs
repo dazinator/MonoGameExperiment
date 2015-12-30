@@ -18,6 +18,7 @@ namespace Craftopia
         private IResolverProvider _resolverProvider;
         private IResolver _resolver;
         private ISpaceShip _spaceShip;
+        private IScoreBoard _scoreBoard;
 
         public CraftopiaGame(IResolverProvider resolverProvider)
         {
@@ -47,6 +48,7 @@ namespace Craftopia
             _resolver = _resolverProvider.GetResolver(this);
             _spriteBatch = Resolve<ISpriteBatch>();
             _spaceShip = Resolve<ISpaceShip>();
+            _scoreBoard = Resolve<IScoreBoard>();
 
             //background = Content.Load<Texture2D>("Images/stars"); // change these names to the names of your images
             //shuttle = Content.Load<Texture2D>("Images/shuttle");  // if you are using your own images.
@@ -78,6 +80,8 @@ namespace Craftopia
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            _spaceShip.Update(gameTime);
+            _scoreBoard.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -95,7 +99,8 @@ namespace Craftopia
             _spriteBatch.Begin();
             //spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
             //spriteBatch.Draw(earth, new Vector2(400, 240), Color.White);
-            _spaceShip.Draw(gameTime);           
+            _spaceShip.Draw(_spriteBatch, gameTime);
+            _scoreBoard.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
 

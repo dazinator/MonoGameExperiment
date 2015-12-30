@@ -49,20 +49,7 @@ namespace Craftopia.MonoGame
         //     This method uses optional parameters.
         void Begin(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = default(Matrix?));
 
-        //
-        // Summary:
-        //     Submit a sprite for drawing in the current batch.
-        //
-        // Parameters:
-        //   texture:
-        //     A texture.
-        //
-        //   destinationRectangle:
-        //     The drawing bounds on screen.
-        //
-        //   color:
-        //     A color mask.
-        void Draw(Texture2D texture, Rectangle destinationRectangle, Color color);
+
         //
         // Summary:
         //     Submit a sprite for drawing in the current batch.
@@ -77,6 +64,60 @@ namespace Craftopia.MonoGame
         //   color:
         //     A color mask.
         void Draw(ITexture2D texture, Vector2 position, Color color);
+
+        
+        //
+        // Summary:
+        //     Submit a text string of sprites for drawing in the current batch.
+        //
+        // Parameters:
+        //   spriteFont:
+        //     A font.
+        //
+        //   text:
+        //     The text which will be drawn.
+        //
+        //   position:
+        //     The drawing location on screen.
+        //
+        //   color:
+        //     A color mask.
+        void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color);
+
+        //
+        // Summary:
+        //     Submit a text string of sprites for drawing in the current batch.
+        //
+        // Parameters:
+        //   spriteFont:
+        //     A font.
+        //
+        //   text:
+        //     The text which will be drawn.
+        //
+        //   position:
+        //     The drawing location on screen.
+        //
+        //   color:
+        //     A color mask.
+        void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color);
+
+
+        //
+        // Summary:
+        //     Submit a sprite for drawing in the current batch.
+        //
+        // Parameters:
+        //   texture:
+        //     A texture.
+        //
+        //   destinationRectangle:
+        //     The drawing bounds on screen.
+        //
+        //   color:
+        //     A color mask.
+        void Draw(Texture2D texture, Rectangle destinationRectangle, Color color);
+     
         //
         // Summary:
         //     Submit a sprite for drawing in the current batch.
@@ -255,40 +296,8 @@ namespace Craftopia.MonoGame
         //     This overload uses optional parameters. This overload requires only one of position
         //     and destinationRectangle been used.
         void Draw(Texture2D texture, Vector2? position = default(Vector2?), Rectangle? destinationRectangle = default(Rectangle?), Rectangle? sourceRectangle = default(Rectangle?), Vector2? origin = default(Vector2?), float rotation = 0, Vector2? scale = default(Vector2?), Color? color = default(Color?), SpriteEffects effects = SpriteEffects.None, float layerDepth = 0);
-        //
-        // Summary:
-        //     Submit a text string of sprites for drawing in the current batch.
-        //
-        // Parameters:
-        //   spriteFont:
-        //     A font.
-        //
-        //   text:
-        //     The text which will be drawn.
-        //
-        //   position:
-        //     The drawing location on screen.
-        //
-        //   color:
-        //     A color mask.
-        void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color);
-        //
-        // Summary:
-        //     Submit a text string of sprites for drawing in the current batch.
-        //
-        // Parameters:
-        //   spriteFont:
-        //     A font.
-        //
-        //   text:
-        //     The text which will be drawn.
-        //
-        //   position:
-        //     The drawing location on screen.
-        //
-        //   color:
-        //     A color mask.
-        void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color);
+     
+      
         //
         // Summary:
         //     Submit a text string of sprites for drawing in the current batch.

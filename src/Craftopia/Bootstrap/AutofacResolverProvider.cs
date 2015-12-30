@@ -22,6 +22,7 @@ namespace Craftopia.Bootstrap
                 .Where(t => IsPerLifetimeService(t))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+               // .PropertiesAutowired();
 
             var container = builder.Build();
             return new AutofacResolver(container);

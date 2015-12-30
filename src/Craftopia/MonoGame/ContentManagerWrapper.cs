@@ -1,4 +1,5 @@
-﻿using Craftopia.Bootstrap;
+﻿using System;
+using Craftopia.Bootstrap;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,6 +15,19 @@ namespace Craftopia.MonoGame
             _contentManager = contentManager;
         }
 
+        public ISpriteFont LoadSpriteFont(string assetName)
+        {
+            try
+            {
+                var font = _contentManager.Load<SpriteFont>(assetName);
+                return new SpriteFontWrapper(font);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
         public ITexture2D LoadTexture2D(string assetName)
         {
             try
@@ -23,11 +37,8 @@ namespace Craftopia.MonoGame
             }
             catch (System.Exception ex)
             {
-
                 throw;
             }
-
-
         }
     }
 }

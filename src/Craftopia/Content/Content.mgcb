@@ -68,3 +68,9 @@
 /processorParam:TextureFormat=Color
 /build:Images/stars.jpg
 
+#begin Fonts/Score.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Score.spritefont
+
