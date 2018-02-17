@@ -13,12 +13,4 @@ namespace Craftopia.Bootstrap
         public RegistrationLifeTimes LifeTime { get; set; }
         
     }
-
-    public enum RegistrationLifeTimes
-    {
-        InstancePerLifetimeScope = 0,
-
-    }
-
-
 }

@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Craftopia.MonoGame;
-using Craftopia.Drawable;
+using System.Collections.Generic;
 
 namespace Craftopia
 {
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -16,9 +17,7 @@ namespace Craftopia
 
         private ISpriteBatch _spriteBatch;
         private IResolverProvider _resolverProvider;
-        private IResolver _resolver;
-        private ISpaceShip _spaceShip;
-        private IScoreBoard _scoreBoard;
+        private IResolver _resolver;       
 
         public CraftopiaGame(IResolverProvider resolverProvider)
         {
@@ -44,17 +43,24 @@ namespace Craftopia
         /// </summary>
         protected override void LoadContent()
         {
+            _resolver = _resolverProvider.GetResolver(this);           
 
-            _resolver = _resolverProvider.GetResolver(this);
-            _spriteBatch = Resolve<ISpriteBatch>();
-            _spaceShip = Resolve<ISpaceShip>();
-            _scoreBoard = Resolve<IScoreBoard>();         
+            var components = ResolveComponents();
+            foreach (var component in components)
+            {
+                Components.Add(component);
+            }
 
         }
 
-        protected virtual T Resolve<T>()
+        //protected virtual T Resolve<T>()
+        //{
+        //    return _resolver.Resolve<T>();
+        //}
+
+        protected virtual IEnumerable<IGameComponent> ResolveComponents()
         {
-            return _resolver.Resolve<T>();
+            return _resolver.ResolveAll<IGameComponent>();
         }
 
         /// <summary>
@@ -74,11 +80,7 @@ namespace Craftopia
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            _spaceShip.Update(gameTime);
-            _scoreBoard.Update(gameTime);
-            // TODO: Add your update logic here
+                Exit();         
 
             base.Update(gameTime);
         }
@@ -90,16 +92,6 @@ namespace Craftopia
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            _spriteBatch.Begin();
-            //spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
-            //spriteBatch.Draw(earth, new Vector2(400, 240), Color.White);
-            _spaceShip.Draw(_spriteBatch, gameTime);
-            _scoreBoard.Draw(_spriteBatch, gameTime);
-            _spriteBatch.End();
-
-
             base.Draw(gameTime);
         }
     }

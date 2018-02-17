@@ -1,5 +1,4 @@
-﻿using System;
-using Craftopia.Bootstrap;
+﻿using Craftopia.Bootstrap;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 

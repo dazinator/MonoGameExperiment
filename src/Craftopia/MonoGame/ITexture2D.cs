@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using System;
 
 namespace Craftopia.MonoGame
 {
-
-
-
     public interface ITexture2D
     {
         Rectangle Bounds { get; }
@@ -17,6 +13,7 @@ namespace Craftopia.MonoGame
         void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct;
         void GetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct;        
         void GetData<T>(int level, int arraySlice, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct;
+        void Draw(SpriteBatch craftopiaSpriteBatch, Vector2 position, Color color);
         void Reload(Stream textureStream);
         void SaveAsJpeg(Stream stream, int width, int height);
         void SaveAsPng(Stream stream, int width, int height);
@@ -25,9 +22,6 @@ namespace Craftopia.MonoGame
         void SetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct;
         void SetData<T>(int level, int arraySlice, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct;
 
-        Texture2D Unwrapped { get; }
-
-
-
+       // Texture2D Unwrapped { get; }
     }
 }

@@ -5,10 +5,14 @@ using Craftopia.MonoGame;
 namespace Craftopia.Drawable
 {
     [Register]
-    public class ScoreBoard : BaseDrawable, IScoreBoard
+    public class ScoreBoard : BaseSpriteBatchDrawable, IScoreBoard
     {
         private ISpriteFont _font;
         private int score = 0;
+
+        public ScoreBoard()
+        {
+        }
 
         public ScoreBoard(IContentManager content)
         {
@@ -24,5 +28,5 @@ namespace Craftopia.Drawable
         {
             score++;
         }
-    }
+    }  
 }

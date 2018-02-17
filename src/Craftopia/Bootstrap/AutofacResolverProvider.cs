@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Autofac;
 using Microsoft.Xna.Framework;
-using Craftopia.MonoGame;
 using System;
 
 namespace Craftopia.Bootstrap
@@ -11,8 +10,9 @@ namespace Craftopia.Bootstrap
         public virtual IResolver GetResolver(Game game)
         {
             var builder = new ContainerBuilder();
-            game.Content.RootDirectory = "Content";     
-                      
+            game.Content.RootDirectory = "Content";
+
+            builder.RegisterInstance(game).As<Game>();
             builder.RegisterInstance(game.Content).AsSelf();
             builder.RegisterInstance(game.GraphicsDevice).AsSelf();
 

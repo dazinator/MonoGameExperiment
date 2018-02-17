@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,7 +6,6 @@ namespace Craftopia.MonoGame
 {
     public class Texture2DWrapper : ITexture2D
     {
-
         private Texture2D _texture2d;
 
         public Texture2DWrapper(Texture2D texture2d)
@@ -37,7 +35,7 @@ namespace Craftopia.MonoGame
             {
                 return _texture2d.Width;
             }
-        }      
+        }
 
         public void GetData<T>(T[] data) where T : struct
         {
@@ -94,17 +92,22 @@ namespace Craftopia.MonoGame
             _texture2d.SetData(level, arraySlice, rect, data, startIndex, elementCount);
         }
 
-        public virtual Texture2D Unwrapped { get { return _texture2d; } } 
-       
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
+        {
+            spriteBatch.Draw(Unwrapped, position, color);
+        }
 
-    //public static implicit operator Texture2DWrapper(Texture2D texture2d)  // implicit texture2d to Texture2DWrapper conversion operator
-    //{
-    //    return new Texture2DWrapper(texture2d);
-    //}
+        protected virtual Texture2D Unwrapped { get { return _texture2d; } }
 
-    public static explicit operator Texture2DWrapper(Texture2D texture2d)  // explicit texture2d to Texture2DWrapper conversion operator
-    {
-        return new Texture2DWrapper(texture2d);
+
+        //public static implicit operator Texture2DWrapper(Texture2D texture2d)  // implicit texture2d to Texture2DWrapper conversion operator
+        //{
+        //    return new Texture2DWrapper(texture2d);
+        //}
+
+        public static explicit operator Texture2DWrapper(Texture2D texture2d)  // explicit texture2d to Texture2DWrapper conversion operator
+        {
+            return new Texture2DWrapper(texture2d);
+        }
     }
-}
 }

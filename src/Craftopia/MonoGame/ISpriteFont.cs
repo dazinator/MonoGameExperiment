@@ -19,7 +19,7 @@ namespace Craftopia.MonoGame
         //     not included in the font.
         char? DefaultCharacter { get; set; }
 
-     
+
         //
         // Summary:
         //     Gets or sets the line spacing (the distance from baseline to baseline) of the
@@ -72,7 +72,14 @@ namespace Craftopia.MonoGame
         Vector2 MeasureString(StringBuilder text);
 
 
-        SpriteFont Unwrapped { get; }
+     //   SpriteFont Unwrapped { get; }
+
+
+
+        void DrawString(SpriteBatch spriteBatch, string text, Vector2 position, Color color);
+
+        void DrawString(SpriteBatch spriteBatch, StringBuilder stringBuilder, Vector2 position, Color color);
+
 
     }
 }

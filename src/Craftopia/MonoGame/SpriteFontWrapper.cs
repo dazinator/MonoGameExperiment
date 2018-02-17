@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -72,12 +70,22 @@ namespace Craftopia.MonoGame
             }
         }
 
-        public SpriteFont Unwrapped
+        private SpriteFont Unwrapped
         {
             get
             {
                 return _font;
             }
+        }
+
+        public void DrawString(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
+        {
+            spriteBatch.DrawString(Unwrapped, text, position, color);
+        }
+
+        public void DrawString(SpriteBatch spriteBatch, StringBuilder stringBuilder, Vector2 position, Color color)
+        {
+            spriteBatch.DrawString(Unwrapped, stringBuilder, position, color);
         }
 
         public Dictionary<char, SpriteFont.Glyph> GetGlyphs()

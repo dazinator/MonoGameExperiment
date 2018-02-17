@@ -7,3 +7,6 @@
 /src/Craftopia/Content/obj/Windows
 /src/Craftopia/obj/x86/Debug
 /src/Craftopia/packages/Autofac.3.5.2
+/src/.vs/Craftopia/v15/Server/sqlite3
+/src/packages
+/src/Craftopia/bin/Windows/x86/Debug

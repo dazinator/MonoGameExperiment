@@ -2,7 +2,7 @@
 
 namespace Craftopia.Drawable
 {
-    public interface IScoreBoard : ICraftopiaDrawable
+    public interface IScoreBoard : ISpriteBatchDrawable
     {
     }
 }
