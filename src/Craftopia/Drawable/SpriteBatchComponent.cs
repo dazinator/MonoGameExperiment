@@ -8,13 +8,13 @@ using System.Linq;
 namespace Craftopia
 {
     [Register]
-    public class SpriteBatchManager : DrawableGameComponent, ISpriteBatchManager
+    public class SpriteBatchComponent : DrawableGameComponent, ISpriteBatchComponent
     {
 
         private readonly List<ISpriteBatchDrawable> _drawables;
         private readonly ISpriteBatch _spriteBatch;
 
-        public SpriteBatchManager(Game game, ISpriteBatch spriteBatch, IEnumerable<ISpriteBatchDrawable> drawables) : base(game)
+        public SpriteBatchComponent(Game game, ISpriteBatch spriteBatch, IEnumerable<ISpriteBatchDrawable> drawables) : base(game)
         {
             _spriteBatch = spriteBatch;
             _drawables = drawables.OrderBy(a => a.UpdateOrder).ToList();

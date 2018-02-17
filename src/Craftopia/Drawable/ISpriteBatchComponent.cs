@@ -2,7 +2,7 @@
 
 namespace Craftopia
 {
-    public interface ISpriteBatchManager : IDrawable
+    public interface ISpriteBatchComponent : IDrawable
     {
 
     }

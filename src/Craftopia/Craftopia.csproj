@@ -73,12 +73,12 @@
     <Compile Include="Drawable\IScoreBoard.cs" />
     <Compile Include="Drawable\ScoreBoard.cs" />
     <Compile Include="ICraftopiaGame.cs" />
-    <Compile Include="ISpriteBatchManager.cs" />
+    <Compile Include="Drawable\ISpriteBatchComponent.cs" />
     <Compile Include="MonoGame\ContentManagerWrapper.cs" />
     <Compile Include="MonoGame\IContentManager.cs" />
     <Compile Include="MonoGame\ISpriteFont.cs" />
     <Compile Include="MonoGame\ITexture2D.cs" />
-    <Compile Include="MonoGame\CraftopiaSpriteBatch.cs" />
+    <Compile Include="MonoGame\SpriteBatchWrapper.cs" />
     <Compile Include="MonoGame\ISpriteBatch.cs" />
     <Compile Include="MonoGame\SpriteFontWrapper.cs" />
     <Compile Include="MonoGame\Texture2DWrapper.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ProgramInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpriteBatchManager.cs" />
+    <Compile Include="Drawable\SpriteBatchComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">

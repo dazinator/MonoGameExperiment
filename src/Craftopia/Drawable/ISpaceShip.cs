@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 
 namespace Craftopia.Drawable
 {
-    public interface ISpaceShip : ISpriteBatchDrawable
-    {
-        Vector2 Position { get; set; }
+    public interface ISpaceShip : ISpriteBatchDrawable, IMovable
+    {       
         Color Color { get; set; }
     }
 

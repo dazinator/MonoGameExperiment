@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Craftopia.MonoGame;
 using System.Collections.Generic;
 
 namespace Craftopia
@@ -14,8 +13,7 @@ namespace Craftopia
     public class CraftopiaGame : Game, ICraftopiaGame
     {
         GraphicsDeviceManager _graphics;
-
-        private ISpriteBatch _spriteBatch;
+       
         private IResolverProvider _resolverProvider;
         private IResolver _resolver;       
 
@@ -50,14 +48,8 @@ namespace Craftopia
             {
                 Components.Add(component);
             }
-
         }
-
-        //protected virtual T Resolve<T>()
-        //{
-        //    return _resolver.Resolve<T>();
-        //}
-
+       
         protected virtual IEnumerable<IGameComponent> ResolveComponents()
         {
             return _resolver.ResolveAll<IGameComponent>();
