@@ -1,6 +1,0 @@
-﻿namespace Craftopia
-{
-    interface ICraftopiaGame
-    {
-    }
-}
