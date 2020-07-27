@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Monogame.Core.DependencyInjection;
+using MonoGame.Core.Components;
 using MonoGame.Core.Content;
 using MonoGame.Core.Graphics;
 using MonoGame.Core.Sprite;
@@ -8,15 +9,16 @@ using MonoGame.Extended.Input.InputListeners;
 namespace Craftopia.Drawable
 {
 
-    [Register]
-    public class SpaceShip : InputListenerComponent, ISpaceShip, IDrawableSprite
+    //[Register]
+    public class SpaceShip : InputListenerComponent, ISpaceShip, ILoadContent
     {
 
         private ITexture2D _texture;
+        private readonly IContentManager _content;
 
         public SpaceShip(Game game, IContentManager content) : base(game)
         {
-            _texture = content.LoadTexture2D("Images/shuttle");  // if you are using your own images.           
+           
             Position = new Vector2(450, 240);
             Color = Color.White;
 
@@ -29,6 +31,12 @@ namespace Craftopia.Drawable
             //  Listeners.Add(mouseListener);
             Listeners.Add(keyboardListener);
             Listeners.Add(gamePadListener);
+            _content = content;
+        }
+
+        public void LoadContent()
+        {
+            _texture = _content.LoadTexture2D("Images/shuttle");  // if you are using your own images.           
         }
 
         private void KeyboardListener_KeyPressed(object sender, KeyboardEventArgs e)
@@ -104,6 +112,6 @@ namespace Craftopia.Drawable
         public void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Draw(_texture, Position, Color);
-        }
+        }        
     }
 }

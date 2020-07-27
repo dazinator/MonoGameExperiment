@@ -1,24 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
-using Monogame.Core.DependencyInjection;
+using MonoGame.Core.Components;
 using MonoGame.Core.Content;
 using MonoGame.Core.Graphics;
 using MonoGame.Core.Sprite;
 
 namespace Craftopia.Drawable
 {
-    [Register]
-    public class ScoreBoard : DrawableSprite, IScoreBoard
+    //[Register]
+    public class ScoreBoard : DrawableSprite, IScoreBoard, ILoadContent
     {
+        private readonly IContentManager _content;
         private ISpriteFont _font;
         private int score = 0;
 
-        public ScoreBoard()
-        {
-        }
-
         public ScoreBoard(IContentManager content)
         {
-            _font = content.LoadSpriteFont("Fonts/Score");
+            _content = content;
         }
 
         public override void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
@@ -26,9 +23,14 @@ namespace Craftopia.Drawable
             spriteBatch.DrawString(_font, "Score: " + score, new Vector2(100, 100), Color.Black);
         }
 
+        public void LoadContent()
+        {
+            _font = _content.LoadSpriteFont("Fonts/Score");
+        }     
+
         public override void Update(GameTime gameTime)
         {
             score++;
         }
-    }  
+    }
 }

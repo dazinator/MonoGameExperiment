@@ -2,7 +2,7 @@
 {
     public enum RegistrationLifeTimes
     {
-        InstancePerLifetimeScope = 0,
+        Scoped = 0,
 
     }
 

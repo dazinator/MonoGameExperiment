@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 using System;
 using Autofac.Extensions.DependencyInjection;
 using Monogame.Core.DependencyInjection;
+using MonoGame.Core.Components;
+using MonoGame.Core.Sprite;
+using Craftopia.Drawable;
 
 namespace Craftopia.Bootstrap
 {
@@ -18,13 +21,20 @@ namespace Craftopia.Bootstrap
             builder.RegisterInstance(game.Content).AsSelf();
             builder.RegisterInstance(game.GraphicsDevice).AsSelf();
 
+            builder.RegisterType<MainGameSpriteBatchComponent>().As<ISpriteBatchComponent>().InstancePerLifetimeScope();
+            builder.RegisterType<SpriteBatchOptions>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<SpaceShip>().As<ISpaceShip>().InstancePerLifetimeScope();
+            builder.RegisterType<ScoreBoard>().As<IScoreBoard>().InstancePerLifetimeScope();
+
             var assy = this.GetType().Assembly;
 
-            builder.RegisterAssemblyTypes(assy)
-                .Where(t => IsPerLifetimeService(t))
+            builder.RegisterAssemblyTypes(assy, typeof(RegisterAttribute).Assembly)
+                .Where(t => IsPerLifetimeService(t))               
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
-               // .PropertiesAutowired();
+            // .PropertiesAutowired();        
+
+
 
             var container = builder.Build();
             return new AutofacServiceProvider(container);           
@@ -38,7 +48,7 @@ namespace Craftopia.Bootstrap
             {
                 foreach (RegisterAttribute att in atts)
                 {
-                    if (att.LifeTime == RegistrationLifeTimes.InstancePerLifetimeScope)
+                    if (att.LifeTime == RegistrationLifeTimes.Scoped)
                     {
                         return true;
                     }

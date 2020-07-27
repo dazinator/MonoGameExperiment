@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Monogame.Core.DependencyInjection;
+using MonoGame.Core.Components;
 using System;
 using System.Collections.Generic;
 
@@ -15,9 +16,9 @@ namespace Craftopia
     public class CraftopiaGame : Game, ICraftopiaGame
     {
         GraphicsDeviceManager _graphics;
-       
+
         private IServiceProviderFactory _serviceProviderFactory;
-        private IServiceProvider _serviceProvider;       
+        private IServiceProvider _serviceProvider;
 
         public CraftopiaGame(IServiceProviderFactory serviceProviderFactory)
         {
@@ -37,21 +38,39 @@ namespace Craftopia
             base.Initialize();
         }
 
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
         {
-            _serviceProvider = _serviceProviderFactory.GetServiceProvider(this);           
-
-            var components = ResolveComponents();
-            foreach (var component in components)
-            {
-                Components.Add(component);
-            }
+            _serviceProvider = _serviceProviderFactory.GetServiceProvider(this);
+            var spriteBatchComponent = GetService<ISpriteBatchComponent>();          
+            LoadComponent(spriteBatchComponent);
         }
-       
+
+        private T GetService<T>()
+        {
+            return _serviceProvider.GetService<T>();
+        }
+
+        private IEnumerable<T> GetServices<T>()
+        {
+            return _serviceProvider.GetService<IEnumerable<T>>();
+        }
+
+        private void LoadComponent(IGameComponent component)
+        {
+            if (component is ILoadContent)
+            {
+                var contentComponent = (ILoadContent)component;
+                contentComponent.LoadContent();
+            }
+
+            Components.Add(component);
+        }
+
         protected virtual IEnumerable<IGameComponent> ResolveComponents()
         {
             return _serviceProvider.GetService<IEnumerable<IGameComponent>>();
@@ -64,6 +83,7 @@ namespace Craftopia
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            this.Content.Unload();
         }
 
         /// <summary>
@@ -74,7 +94,7 @@ namespace Craftopia
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();         
+                Exit();
 
             base.Update(gameTime);
         }

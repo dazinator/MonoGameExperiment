@@ -13,6 +13,6 @@ namespace Craftopia
         protected override IGame GetGame(IServiceProviderFactory factory)
         {
             return new CraftopiaGame(factory);
-        }  
+        }
     }
 }
