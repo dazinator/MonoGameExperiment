@@ -1,35 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Core.Graphics;
-using MonoGame.Core.Sprite;
-using System;
 using System.Collections.Generic;
 
 namespace MonoGame.Core.Components
 {
 
-    /// <summary>
-    /// Comparer for comparing two keys, handling equality as beeing greater
-    /// Use this Comparer e.g. with SortedLists or SortedDictionaries, that don't allow duplicate keys
-    /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    public class DuplicateKeyComparer<TKey> : IComparer<TKey> where TKey : IComparable
-    {
-        #region IComparer<TKey> Members
-
-        public int Compare(TKey x, TKey y)
-        {
-            int result = x.CompareTo(y);
-
-            if (result == 0)
-                return 1;   // Handle equality as beeing greater
-            else
-                return result;
-        }
-
-        #endregion
-    }
-
-    //[Register]
     public class SpriteBatchComponent : DrawableGameComponent, ISpriteBatchComponent
     {
 
@@ -44,39 +19,44 @@ namespace MonoGame.Core.Components
             _spriteBatch = spriteBatch;
             _options = options;
 
-            Drawables = new SortedList<int, IDrawableSprite>(new DuplicateKeyComparer<int>());
+            Drawables = new List<IDrawable>();
         }
 
         /// <summary>
         /// Adds the drawable to the batch. If the drawable implements <see cref="ILoadContent"/> then LoadContent() will be called at this point.
         /// </summary>
         /// <param name="sprite"></param>
-        public void AddDrawable(IDrawableSprite sprite)
-        {
-            if (sprite is ILoadContent)
+        public void AddDrawable(IDrawable drawable)
+        {            
+            if (drawable is ILoadContent)
             {
-                ((ILoadContent)sprite).LoadContent();
-            }
-            Drawables.Add(sprite.UpdateOrder, sprite);
-
-        }
-
-        public void RemoveDrawable(IDrawableSprite sprite)
-        {
-            Drawables.Values.Remove(sprite);
-        }
-
-        protected SortedList<int, IDrawableSprite> Drawables { get; set; }
-
-        public override void Update(GameTime gameTime)
-        {
-            foreach (var item in Drawables)
-            {
-                item.Value.Update(gameTime);
+                ((ILoadContent)drawable).LoadContent();
             }
 
-            base.Update(gameTime);
+            if (drawable is IUseSpriteBatch)
+            {
+                ((IUseSpriteBatch)drawable).SpriteBatch = _spriteBatch;
+            }
+
+            Drawables.Add(drawable);
         }
+
+        public void RemoveDrawable(IDrawable drawable)
+        {
+            Drawables.Remove(drawable);
+        }
+
+        protected List<IDrawable> Drawables { get; set; }
+
+        //public override void Update(GameTime gameTime)
+        //{
+        //    foreach (var item in Drawables)
+        //    {
+        //        item.Update(gameTime);
+        //    }
+
+        //    base.Update(gameTime);
+        //}
 
         public override void Draw(GameTime gameTime)
         {
@@ -84,13 +64,12 @@ namespace MonoGame.Core.Components
 
             foreach (var item in Drawables)
             {
-                item.Value.Draw(_spriteBatch, gameTime);
+                item.Draw(gameTime);
             }
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
-
     }
 }

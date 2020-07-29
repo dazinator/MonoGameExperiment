@@ -18,9 +18,9 @@ namespace Craftopia.Drawable
             _content = content;
         }
 
-        public override void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            spriteBatch.DrawString(_font, "Score: " + score, new Vector2(100, 100), Color.Black);
+            SpriteBatch.DrawString(_font, "Score: " + score, new Vector2(100, 100), Color.Black);
         }
 
         public void LoadContent()

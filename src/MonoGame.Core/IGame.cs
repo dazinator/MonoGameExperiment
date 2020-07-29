@@ -2,7 +2,7 @@
 
 namespace Craftopia
 {
-    public interface IGame: IDisposable
+    public interface IGame : IDisposable
     {
         void Run();
     }

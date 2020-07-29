@@ -10,7 +10,7 @@ namespace MonoGame.Core.Graphics
 {
     public class SpriteFont : ISpriteFont
     {
-        private MsSpriteFont _font;
+        private MsSpriteFont _font;        
 
         public SpriteFont(MsSpriteFont font)
         {

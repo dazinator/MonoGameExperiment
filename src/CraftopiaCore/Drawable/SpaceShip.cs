@@ -1,17 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
-using Monogame.Core.DependencyInjection;
 using MonoGame.Core.Components;
 using MonoGame.Core.Content;
 using MonoGame.Core.Graphics;
-using MonoGame.Core.Sprite;
 using MonoGame.Extended.Input.InputListeners;
+using System;
 
 namespace Craftopia.Drawable
 {
 
     //[Register]
-    public class SpaceShip : InputListenerComponent, ISpaceShip, ILoadContent
+    public class SpaceShip : InputListenerComponent, ISpaceShip, ILoadContent, IUseSpriteBatch, IDrawable
     {
+        public event EventHandler<EventArgs> DrawOrderChanged;
+        public event EventHandler<EventArgs> VisibleChanged;
 
         private ITexture2D _texture;
         private readonly IContentManager _content;
@@ -102,16 +103,59 @@ namespace Craftopia.Drawable
 
         public Color Color { get; set; }
 
+        private int _drawOrder { get; set; }
+        public int DrawOrder
+        {
+            get { return _drawOrder; }
+            set
+            {
+                var previous = _drawOrder;
+                _drawOrder = value;
+                if (_drawOrder != previous)
+                {
+                    OnDrawOrderChanged();
+                }
+
+            }
+        }
+
+        private void OnDrawOrderChanged()
+        {
+            DrawOrderChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private bool _visible { get; set; }
+        public bool Visible
+        {
+            get { return _visible; }
+            set
+            {
+                var previous = _visible;
+                _visible = value;
+                if (_visible != previous)
+                {
+                    OnVisibleChanged();
+                }
+
+            }
+        }
+
+        private void OnVisibleChanged()
+        {
+            VisibleChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public Vector2 Position { get; set; }
+        public ISpriteBatch SpriteBatch { get; set; }
 
         public override void Initialize()
         {
             base.Initialize();
         }
 
-        public void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
-            spriteBatch.Draw(_texture, Position, Color);
+            SpriteBatch.Draw(_texture, Position, Color);
         }        
     }
 }

@@ -25,6 +25,7 @@ namespace Craftopia.Bootstrap
             builder.RegisterType<SpriteBatchOptions>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SpaceShip>().As<ISpaceShip>().InstancePerLifetimeScope();
             builder.RegisterType<ScoreBoard>().As<IScoreBoard>().InstancePerLifetimeScope();
+            builder.RegisterType<TitleContainerFileStreamProvider>().As<IFileStreamProvider>().InstancePerLifetimeScope();
 
             var assy = this.GetType().Assembly;
 

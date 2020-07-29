@@ -48,6 +48,10 @@ namespace Craftopia
             _serviceProvider = _serviceProviderFactory.GetServiceProvider(this);
             var spriteBatchComponent = GetService<ISpriteBatchComponent>();          
             LoadComponent(spriteBatchComponent);
+
+            var screenManager = new MonoGame.Extended.Screens.ScreenManager();
+            spriteBatchComponent.AddDrawable(screenManager);       
+
         }
 
         private T GetService<T>()
@@ -62,11 +66,11 @@ namespace Craftopia
 
         private void LoadComponent(IGameComponent component)
         {
-            if (component is ILoadContent)
-            {
-                var contentComponent = (ILoadContent)component;
-                contentComponent.LoadContent();
-            }
+            //if (component is ILoadContent)
+            //{
+            //    var contentComponent = (ILoadContent)component;
+            //    contentComponent.LoadContent();
+            //}
 
             Components.Add(component);
         }

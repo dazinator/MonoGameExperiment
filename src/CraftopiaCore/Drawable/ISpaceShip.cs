@@ -4,7 +4,7 @@ using MonoGame.Extended;
 
 namespace Craftopia.Drawable
 {
-    public interface ISpaceShip : IDrawableSprite, IMovable
+    public interface ISpaceShip : IMovable, IDrawable
     {       
         Color Color { get; set; }
     }
