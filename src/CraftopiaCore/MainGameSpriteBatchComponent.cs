@@ -8,10 +8,9 @@ namespace Craftopia
     public class MainGameSpriteBatchComponent : SpriteBatchComponent
     {
         public MainGameSpriteBatchComponent(Game game,
-            ISpriteBatch spriteBatch,
-            SpriteBatchOptions options,
+            ISpriteBatch spriteBatch,          
             IScoreBoard scoreBoard,
-            ISpaceShip spaceShip) : base(game, spriteBatch, options)
+            ISpaceShip spaceShip) : base(game, spriteBatch)
         {
             AddDrawable(scoreBoard);
             AddDrawable(spaceShip);

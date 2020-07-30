@@ -7,8 +7,6 @@ using System;
 
 namespace Craftopia.Drawable
 {
-
-    //[Register]
     public class SpaceShip : InputListenerComponent, ISpaceShip, ILoadContent, IUseSpriteBatch, IDrawable
     {
         public event EventHandler<EventArgs> DrawOrderChanged;
@@ -16,11 +14,13 @@ namespace Craftopia.Drawable
 
         private ITexture2D _texture;
         private readonly IContentManager _content;
+        private readonly Func<IContentManager> _contentManagerFactory;
 
-        public SpaceShip(Game game, IContentManager content) : base(game)
+        public SpaceShip(Game game, Func<IContentManager> contentManagerFactory) : base(game)
         {
-           
-            Position = new Vector2(450, 240);
+            _contentManagerFactory = contentManagerFactory;
+
+             Position = new Vector2(450, 240);
             Color = Color.White;
 
             // var mouseListener = new MouseListener(new MouseListenerSettings());
@@ -32,7 +32,7 @@ namespace Craftopia.Drawable
             //  Listeners.Add(mouseListener);
             Listeners.Add(keyboardListener);
             Listeners.Add(gamePadListener);
-            _content = content;
+            _content = _contentManagerFactory();          
         }
 
         public void LoadContent()

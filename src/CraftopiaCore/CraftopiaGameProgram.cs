@@ -7,7 +7,7 @@ namespace Craftopia
     {
         protected override IServiceProviderFactory GetServiceProviderFactory()
         {
-            return new AutofacServiceProviderFactory();
+            return new MicrosoftServiceProviderFactory();
         }
 
         protected override IGame GetGame(IServiceProviderFactory factory)

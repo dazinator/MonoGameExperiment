@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MonoGame.Core.Components
 {
 
-    public class SpriteBatchOptions
+    public class SpriteBatchComponentOptions
     {
         public SpriteSortMode SpriteSortMode { get; set; } = SpriteSortMode.Deferred;
         public BlendState BlendState { get; set; } = null;

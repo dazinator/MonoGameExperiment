@@ -3,7 +3,7 @@ using MonoGame.Core.Graphics;
 
 namespace MonoGame.Core.Content
 {
-    [Register]
+   
     public class ContentManager : IContentManager
     {
         private readonly Microsoft.Xna.Framework.Content.ContentManager _contentManager;

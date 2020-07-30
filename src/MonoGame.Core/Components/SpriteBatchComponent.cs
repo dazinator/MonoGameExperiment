@@ -9,25 +9,22 @@ namespace MonoGame.Core.Components
     {
 
         private readonly ISpriteBatch _spriteBatch;
-        private readonly SpriteBatchOptions _options;
 
-        public SpriteBatchComponent(
-            Game game,
-            ISpriteBatch spriteBatch,
-            SpriteBatchOptions options) : base(game)
+        public SpriteBatchComponent(Game game, ISpriteBatch spriteBatch) : base(game)
         {
             _spriteBatch = spriteBatch;
-            _options = options;
-
             Drawables = new List<IDrawable>();
+            Options = new SpriteBatchComponentOptions();
         }
+
+        public SpriteBatchComponentOptions Options { get; set; }
 
         /// <summary>
         /// Adds the drawable to the batch. If the drawable implements <see cref="ILoadContent"/> then LoadContent() will be called at this point.
         /// </summary>
         /// <param name="sprite"></param>
         public void AddDrawable(IDrawable drawable)
-        {            
+        {
             if (drawable is ILoadContent)
             {
                 ((ILoadContent)drawable).LoadContent();
@@ -46,7 +43,18 @@ namespace MonoGame.Core.Components
             Drawables.Remove(drawable);
         }
 
+        /// <summary>
+        /// Adds the drawable to the batch. If the drawable implements <see cref="ILoadContent"/> then LoadContent() will be called at this point.
+        /// </summary>
+        /// <param name="sprite"></param>
+        public void AddUpdateable(IUpdateable updateable)
+        {
+            Updateables.Add(updateable);
+        }
+
         protected List<IDrawable> Drawables { get; set; }
+
+        protected List<IUpdateable> Updateables { get; set; }
 
         //public override void Update(GameTime gameTime)
         //{
@@ -58,9 +66,23 @@ namespace MonoGame.Core.Components
         //    base.Update(gameTime);
         //}
 
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
         public override void Draw(GameTime gameTime)
         {
-            _spriteBatch.Begin(_options.SpriteSortMode, _options.BlendState, _options.SamplerState, _options.DepthStencilState, _options.RasterizerState, _options.Effect, _options.TransformationMatrix);
+            _spriteBatch.Begin(Options.SpriteSortMode, Options.BlendState, Options.SamplerState, Options.DepthStencilState, Options.RasterizerState, Options.Effect, Options.TransformationMatrix);
 
             foreach (var item in Drawables)
             {
