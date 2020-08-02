@@ -1,7 +1,7 @@
 ﻿using System;
-using MonoGame.Core.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Dazinator.Extensions.DependencyInjection;
+using MonoGame.Base.Components;
 
 namespace Craftopia.Bootstrap
 {

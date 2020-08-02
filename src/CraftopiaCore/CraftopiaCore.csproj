@@ -36,7 +36,7 @@
     <Folder Include="Content\Fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MonoGame.Core\MonoGame.Core.csproj" />
+    <ProjectReference Include="..\MonoGame.Base\MonoGame.Base.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

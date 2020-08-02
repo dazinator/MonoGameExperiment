@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MsSpriteFont = Microsoft.Xna.Framework.Graphics.SpriteFont;
 
-namespace MonoGame.Core.Graphics
+namespace MonoGame.Base.Graphics
 {
     public class SpriteFont : ISpriteFont
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame.Core.Sprite;
+using MonoGame.Base.Sprite;
 using MonoGame.Extended;
 
 namespace Craftopia.Drawable

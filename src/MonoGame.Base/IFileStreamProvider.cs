@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Craftopia
+namespace Monogame.Base
 {
     public interface IFileStreamProvider
     {

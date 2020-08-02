@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.IO;
 
-namespace Craftopia
+namespace Monogame.Base
 {
     public class TitleContainerFileStreamProvider : IFileStreamProvider
     {

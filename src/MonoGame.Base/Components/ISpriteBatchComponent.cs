@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace MonoGame.Core.Components
+namespace MonoGame.Base.Components
 {
     public interface ISpriteBatchComponent : IDrawable, IGameComponent, IUpdateable, IDisposable
     {

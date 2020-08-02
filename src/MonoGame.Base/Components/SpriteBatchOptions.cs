@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGame.Core.Components
+namespace MonoGame.Base.Components
 {
 
     public class SpriteBatchComponentOptions

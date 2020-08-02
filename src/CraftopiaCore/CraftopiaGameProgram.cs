@@ -1,4 +1,5 @@
 ﻿using Craftopia.Bootstrap;
+using Monogame.Base;
 using Monogame.Core.DependencyInjection;
 
 namespace Craftopia

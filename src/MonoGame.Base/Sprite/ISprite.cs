@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame.Core.Graphics;
+using MonoGame.Base.Graphics;
 
-namespace MonoGame.Core.Sprite
+namespace MonoGame.Base.Sprite
 {
     public interface ISprite : IUpdateable, IDrawable
     {

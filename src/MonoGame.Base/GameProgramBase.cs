@@ -1,6 +1,6 @@
 ﻿using Monogame.Core.DependencyInjection;
 
-namespace Craftopia
+namespace Monogame.Base
 {
     public abstract class GameProgramBase
     {

@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using MsSpriteFont = Microsoft.Xna.Framework.Graphics.SpriteFont;
 
-namespace MonoGame.Core.Graphics
+namespace MonoGame.Base.Graphics
 {
     public interface ISpriteFont
     {

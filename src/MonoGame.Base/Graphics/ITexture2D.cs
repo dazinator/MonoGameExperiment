@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
-namespace MonoGame.Core.Graphics
+namespace MonoGame.Base.Graphics
 {
     public interface ITexture2D
     {

@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Monogame.Core.DependencyInjection;
-using MonoGame.Core.Components;
 using Craftopia.Drawable;
 using Microsoft.Extensions.DependencyInjection;
 using Dazinator.Extensions.DependencyInjection;
-using MonoGame.Core.Content;
-using MonoGame.Core.Graphics;
-using MonoGame.Extended.Collections;
-using System.ComponentModel.DataAnnotations;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
+using Monogame.Base;
 
 namespace Craftopia.Bootstrap
 {

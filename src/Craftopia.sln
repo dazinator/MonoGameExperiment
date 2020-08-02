@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CraftopiaCore", "CraftopiaCore\CraftopiaCore.csproj", "{1508B969-527C-4505-8B77-A0112EF0656F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Core", "MonoGame.Core\MonoGame.Core.csproj", "{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Base", "MonoGame.Base\MonoGame.Base.csproj", "{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,14 @@ Global
 		{1508B969-527C-4505-8B77-A0112EF0656F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1508B969-527C-4505-8B77-A0112EF0656F}.Release|x86.ActiveCfg = Release|Any CPU
 		{1508B969-527C-4505-8B77-A0112EF0656F}.Release|x86.Build.0 = Release|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Debug|x86.Build.0 = Debug|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Release|x86.ActiveCfg = Release|Any CPU
-		{1E84C11D-A683-4B83-A4E9-0FBD095DE8B7}.Release|x86.Build.0 = Release|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Debug|x86.Build.0 = Debug|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Release|x86.ActiveCfg = Release|Any CPU
+		{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

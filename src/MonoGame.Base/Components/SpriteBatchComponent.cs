@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame.Core.Graphics;
-using MonoGame.Core.Sprite;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
+using MonoGame.Base.Sprite;
 using System.Collections.Generic;
 
-namespace MonoGame.Core.Components
+namespace MonoGame.Base.Components
 {
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Craftopia
+namespace Monogame.Base
 {
     public interface IGame : IDisposable
     {

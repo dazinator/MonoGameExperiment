@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame.Core.Components;
-using MonoGame.Core.Content;
-using MonoGame.Core.Graphics;
-using MonoGame.Core.Sprite;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
+using MonoGame.Base.Sprite;
 
 namespace Craftopia.Drawable
 {

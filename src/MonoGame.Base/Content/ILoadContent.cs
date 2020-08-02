@@ -1,4 +1,4 @@
-﻿namespace MonoGame.Core.Components
+﻿namespace MonoGame.Base.Content
 {
     public interface ILoadContent
     {

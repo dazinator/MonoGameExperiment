@@ -1,4 +1,4 @@
-﻿using MonoGame.Core.Sprite;
+﻿using MonoGame.Base.Sprite;
 
 namespace Craftopia.Drawable
 {

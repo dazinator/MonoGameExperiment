@@ -1,6 +1,6 @@
-﻿using MonoGame.Core.Graphics;
+﻿using MonoGame.Base.Graphics;
 
-namespace MonoGame.Core.Content
+namespace MonoGame.Base.Content
 {
     public interface IContentManager
     {

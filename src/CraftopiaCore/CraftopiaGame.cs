@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Monogame.Core.DependencyInjection;
-using MonoGame.Core.Components;
+using MonoGame.Base.Components;
 using System;
 using System.Collections.Generic;
 

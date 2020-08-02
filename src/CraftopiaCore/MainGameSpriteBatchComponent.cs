@@ -1,7 +1,7 @@
 ﻿using Craftopia.Drawable;
 using Microsoft.Xna.Framework;
-using MonoGame.Core.Components;
-using MonoGame.Core.Graphics;
+using MonoGame.Base.Components;
+using MonoGame.Base.Graphics;
 
 namespace Craftopia
 {

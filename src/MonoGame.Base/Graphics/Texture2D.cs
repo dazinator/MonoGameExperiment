@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MsTexture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 
-namespace MonoGame.Core.Graphics
+namespace MonoGame.Base.Graphics
 {
     public class Texture2D : ITexture2D
     {

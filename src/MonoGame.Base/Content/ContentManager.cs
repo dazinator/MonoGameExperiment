@@ -1,9 +1,8 @@
-﻿using Monogame.Core.DependencyInjection;
-using MonoGame.Core.Graphics;
+﻿using MonoGame.Base.Graphics;
 
-namespace MonoGame.Core.Content
+namespace MonoGame.Base.Content
 {
-   
+
     public class ContentManager : IContentManager
     {
         private readonly Microsoft.Xna.Framework.Content.ContentManager _contentManager;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MonoGame.Core.Components
+namespace MonoGame.Base.Components
 {
     /// <summary>
     /// Comparer for comparing two keys, handling equality as beeing greater
