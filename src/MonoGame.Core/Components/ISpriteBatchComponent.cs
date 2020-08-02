@@ -5,7 +5,7 @@ namespace MonoGame.Core.Components
 {
     public interface ISpriteBatchComponent : IDrawable, IGameComponent, IUpdateable, IDisposable
     {
-        void AddDrawable(IDrawable drawable);
-        void RemoveDrawable(IDrawable drawable);        
+        void Register(IDrawable drawable);
+        void Unregister(IDrawable drawable);        
     }
 }

@@ -2,8 +2,8 @@
 
 namespace MonoGame.Core.Components
 {
-    public interface IUseSpriteBatch
-    {
-        ISpriteBatch SpriteBatch { get; set; }
-    }
+    //public interface IUseSpriteBatch
+    //{
+      
+    //}
 }

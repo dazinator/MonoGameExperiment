@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Core.Graphics;
+using MonoGame.Core.Sprite;
 using System.Collections.Generic;
 
 namespace MonoGame.Core.Components
 {
+
 
     public class SpriteBatchComponent : DrawableGameComponent, ISpriteBatchComponent
     {
@@ -14,6 +16,7 @@ namespace MonoGame.Core.Components
         {
             _spriteBatch = spriteBatch;
             Drawables = new List<IDrawable>();
+            Updateables = new List<IUpdateable>();
             Options = new SpriteBatchComponentOptions();
         }
 
@@ -23,22 +26,31 @@ namespace MonoGame.Core.Components
         /// Adds the drawable to the batch. If the drawable implements <see cref="ILoadContent"/> then LoadContent() will be called at this point.
         /// </summary>
         /// <param name="sprite"></param>
-        public void AddDrawable(IDrawable drawable)
+        public void Register(IDrawable drawable)
         {
-            if (drawable is ILoadContent)
+            var loadContent = drawable as ILoadContent;
+            if (loadContent != null)
             {
-                ((ILoadContent)drawable).LoadContent();
+                loadContent.LoadContent();
             }
 
-            if (drawable is IUseSpriteBatch)
+            var sprite = drawable as ISprite;
+            if (sprite != null)
             {
-                ((IUseSpriteBatch)drawable).SpriteBatch = _spriteBatch;
+                sprite.SpriteBatch = _spriteBatch;
             }
 
             Drawables.Add(drawable);
+
+            var updateable = drawable as IUpdateable;
+            if (updateable != null)
+            {
+                Updateables.Add(updateable);
+            }
+
         }
 
-        public void RemoveDrawable(IDrawable drawable)
+        public void Unregister(IDrawable drawable)
         {
             Drawables.Remove(drawable);
         }
@@ -77,6 +89,13 @@ namespace MonoGame.Core.Components
 
         public override void Update(GameTime gameTime)
         {
+            foreach (var item in Updateables)
+            {
+                if (item.Enabled)
+                {
+                    item.Update(gameTime);
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -86,7 +105,10 @@ namespace MonoGame.Core.Components
 
             foreach (var item in Drawables)
             {
-                item.Draw(gameTime);
+                if (item.Visible)
+                {
+                    item.Draw(gameTime);
+                }
             }
 
             _spriteBatch.End();

@@ -3,7 +3,7 @@ using MonoGame.Core.Graphics;
 
 namespace MonoGame.Core.Sprite
 {
-    public interface ISpriteBatchDrawable : IUpdateable, IDrawable
+    public interface ISprite : IUpdateable, IDrawable
     {
         ISpriteBatch SpriteBatch { get; set; } 
     }   

@@ -1,29 +1,28 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using MonoGame.Core.Components;
 using MonoGame.Core.Graphics;
 
 namespace MonoGame.Core.Sprite
 {
-    public abstract class DrawableSprite : IDrawable, IUseSpriteBatch, IUpdateable
+    public abstract class Sprite : ISprite
     {
         public event EventHandler<EventArgs> EnabledChanged;
         public event EventHandler<EventArgs> UpdateOrderChanged;
         public event EventHandler<EventArgs> DrawOrderChanged;
         public event EventHandler<EventArgs> VisibleChanged;
 
-        private bool _enabled { get; set; }
+        private bool _enabled { get; set; } = true;
         public bool Enabled
         {
             get { return _enabled; }
             set
             {
-                var previous = _enabled;                
+                var previous = _enabled;
                 _enabled = value;
                 if (_enabled != previous)
                 {
                     OnEnabledChanged();
-                }                  
+                }
             }
         }
 
@@ -38,7 +37,7 @@ namespace MonoGame.Core.Sprite
                 if (_updateOrder != previous)
                 {
                     OnUpdateOrderChanged();
-                }    
+                }
             }
         }
 
@@ -55,12 +54,12 @@ namespace MonoGame.Core.Sprite
                 if (_drawOrder != previous)
                 {
                     OnDrawOrderChanged();
-                }                  
-              
+                }
+
             }
         }
 
-        private bool _visible { get; set; }
+        private bool _visible { get; set; } = true;
         public bool Visible
         {
             get { return _visible; }
@@ -71,8 +70,8 @@ namespace MonoGame.Core.Sprite
                 if (_visible != previous)
                 {
                     OnVisibleChanged();
-                }                  
-                
+                }
+
             }
         }
 

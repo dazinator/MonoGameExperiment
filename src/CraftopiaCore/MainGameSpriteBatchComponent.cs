@@ -12,8 +12,8 @@ namespace Craftopia
             IScoreBoard scoreBoard,
             ISpaceShip spaceShip) : base(game, spriteBatch)
         {
-            AddDrawable(scoreBoard);
-            AddDrawable(spaceShip);
+            Register(scoreBoard);
+            Register(spaceShip);
         }       
     }
 }

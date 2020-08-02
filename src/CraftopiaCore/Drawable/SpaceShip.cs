@@ -2,25 +2,24 @@
 using MonoGame.Core.Components;
 using MonoGame.Core.Content;
 using MonoGame.Core.Graphics;
+using MonoGame.Core.Sprite;
 using MonoGame.Extended.Input.InputListeners;
 using System;
 
 namespace Craftopia.Drawable
 {
-    public class SpaceShip : InputListenerComponent, ISpaceShip, ILoadContent, IUseSpriteBatch, IDrawable
+
+    public class SpaceShip : InputListenerComponent, ISpaceShip, ILoadContent
     {
         public event EventHandler<EventArgs> DrawOrderChanged;
         public event EventHandler<EventArgs> VisibleChanged;
 
         private ITexture2D _texture;
         private readonly IContentManager _content;
-        private readonly Func<IContentManager> _contentManagerFactory;
 
-        public SpaceShip(Game game, Func<IContentManager> contentManagerFactory) : base(game)
+        public SpaceShip(Game game, IContentManager content) : base(game)
         {
-            _contentManagerFactory = contentManagerFactory;
-
-             Position = new Vector2(450, 240);
+            Position = new Vector2(450, 240);
             Color = Color.White;
 
             // var mouseListener = new MouseListener(new MouseListenerSettings());
@@ -32,7 +31,7 @@ namespace Craftopia.Drawable
             //  Listeners.Add(mouseListener);
             Listeners.Add(keyboardListener);
             Listeners.Add(gamePadListener);
-            _content = _contentManagerFactory();          
+            _content = content;
         }
 
         public void LoadContent()
@@ -124,7 +123,7 @@ namespace Craftopia.Drawable
             DrawOrderChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private bool _visible { get; set; }
+        private bool _visible { get; set; } = true;
         public bool Visible
         {
             get { return _visible; }
@@ -155,7 +154,8 @@ namespace Craftopia.Drawable
 
         public void Draw(GameTime gameTime)
         {
-            SpriteBatch.Draw(_texture, Position, Color);
-        }        
+            SpriteBatch?.Draw(_texture, Position, Color);
+            // SpriteBatch.Draw(_texture, Position, Color);
+        }
     }
 }

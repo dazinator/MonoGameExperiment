@@ -8,6 +8,7 @@ using Dazinator.Extensions.DependencyInjection;
 using MonoGame.Core.Content;
 using MonoGame.Core.Graphics;
 using MonoGame.Extended.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace Craftopia.Bootstrap
 {
@@ -31,25 +32,24 @@ namespace Craftopia.Bootstrap
             {
                 a.AddSingleton<SpriteBatch>();
             });
-
-            builder.AddNamed<SpriteBatchComponentOptions>(a =>
-            {
-                a.AddTransient<SpriteBatchComponentOptions>();
-            });
-            // new SpaceShip(game, )
-            builder.AddSingleton<ISpaceShip>(sp => new SpaceShip(game, () => sp.GetRequiredService<IContentManager>()));
-            //builder.AddSingleton<ISpaceShip, SpaceShip>();
+          
+            builder.AddSingleton<ISpaceShip, SpaceShip>();
             builder.AddSingleton<IScoreBoard, ScoreBoard>();
 
-            builder.AddNamed<ISpriteBatchComponent>((a) =>
+            builder.AddSpriteBatchComponents((o) =>
             {
-                a.AddSingleton<MainGameSpriteBatchComponent>();
-                //var spriteBatch = a.ServiceProvider.GetRequiredService<ISpriteBatch>();
-                //var spriteBatchComponent = new SpriteBatchComponent(game, spriteBatch, options);
-                //var spaceShip = a.ServiceProvider.GetRequiredService<ISpaceShip>();
-                //var scoreBoard = a.ServiceProvider.GetRequiredService<ISpaceShip>();
-                //spriteBatchComponent.AddDrawable(new SpaceShip());
+                o.AddSingleton<MainGameSpriteBatchComponent>();
             });
+
+            //builder.AddNamed<ISpriteBatchComponent>((a) =>
+            //{
+            //    a.AddSingleton<MainGameSpriteBatchComponent>();
+            //    //var spriteBatch = a.ServiceProvider.GetRequiredService<ISpriteBatch>();
+            //    //var spriteBatchComponent = new SpriteBatchComponent(game, spriteBatch, options);
+            //    //var spaceShip = a.ServiceProvider.GetRequiredService<ISpaceShip>();
+            //    //var scoreBoard = a.ServiceProvider.GetRequiredService<ISpaceShip>();
+            //    //spriteBatchComponent.AddDrawable(new SpaceShip());
+            //});
 
             builder.AddSingleton<IFileStreamProvider, TitleContainerFileStreamProvider>();
 
@@ -66,6 +66,7 @@ namespace Craftopia.Bootstrap
             //var container = builder.Build();
             return builder.BuildServiceProvider();
         }
+
 
     }
 }

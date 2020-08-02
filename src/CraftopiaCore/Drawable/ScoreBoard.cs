@@ -6,8 +6,7 @@ using MonoGame.Core.Sprite;
 
 namespace Craftopia.Drawable
 {
-    //[Register]
-    public class ScoreBoard : DrawableSprite, IScoreBoard, ILoadContent
+    public class ScoreBoard : Sprite, IScoreBoard, ILoadContent
     {
         private readonly IContentManager _content;
         private ISpriteFont _font;
@@ -20,7 +19,7 @@ namespace Craftopia.Drawable
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch.DrawString(_font, "Score: " + score, new Vector2(100, 100), Color.Black);
+            SpriteBatch?.DrawString(_font, "Score: " + score, new Vector2(100, 100), Color.Black);
         }
 
         public void LoadContent()

@@ -50,7 +50,7 @@ namespace Craftopia
             LoadComponent(spriteBatchComponent);
 
             var screenManager = new MonoGame.Extended.Screens.ScreenManager();
-            spriteBatchComponent.AddDrawable(screenManager);       
+            spriteBatchComponent.Register(screenManager);       
 
         }
 
