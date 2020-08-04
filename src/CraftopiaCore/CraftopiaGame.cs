@@ -1,21 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Monogame.Core.DependencyInjection;
 using MonoGame.Base.Components;
 using System;
-using System.Collections.Generic;
 
 namespace Craftopia
 {
-
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class CraftopiaGame : Game, ICraftopiaGame
     {
-        GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
 
         private IServiceProviderFactory _serviceProviderFactory;
         private IServiceProvider _serviceProvider;
@@ -35,7 +32,23 @@ namespace Craftopia
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            _serviceProvider = _serviceProviderFactory.GetServiceProvider(this);
+
+            this.IsMouseVisible = true;
+            this.Window.AllowUserResizing = true;
+
+            var resolutionRenderingComponent = GetService<ScaledResolutionComponent>();
+            resolutionRenderingComponent.RenderScale = 1.0f;
+            resolutionRenderingComponent.RenderScreenHeight = 1080;
+
+            LoadComponent(resolutionRenderingComponent);
+           
             base.Initialize();
+
+            //_graphics.PreferredBackBufferWidth = 1280;
+            //_graphics.PreferredBackBufferHeight = 720;
+            //_graphics.ApplyChanges();          
         }
 
 
@@ -44,25 +57,17 @@ namespace Craftopia
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
-        {
-            _serviceProvider = _serviceProviderFactory.GetServiceProvider(this);
-            var spriteBatchComponent = GetService<ISpriteBatchComponent>();          
-            LoadComponent(spriteBatchComponent);
+        {         
 
+            var spriteBatchComponent = GetService<ISpriteBatchComponent>();
             var screenManager = new MonoGame.Extended.Screens.ScreenManager();
-            spriteBatchComponent.Register(screenManager);       
-
+            spriteBatchComponent.Register(screenManager);
         }
 
         private T GetService<T>()
         {
             return _serviceProvider.GetService<T>();
-        }
-
-        private IEnumerable<T> GetServices<T>()
-        {
-            return _serviceProvider.GetService<IEnumerable<T>>();
-        }
+        }      
 
         private void LoadComponent(IGameComponent component)
         {
@@ -73,12 +78,7 @@ namespace Craftopia
             //}
 
             Components.Add(component);
-        }
-
-        protected virtual IEnumerable<IGameComponent> ResolveComponents()
-        {
-            return _serviceProvider.GetService<IEnumerable<IGameComponent>>();
-        }
+        }      
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -109,7 +109,6 @@ namespace Craftopia
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
         }
     }

@@ -1,12 +1,13 @@
 ﻿using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MSGraphicsDevice = Microsoft.Xna.Framework.Graphics.GraphicsDevice;
 
 namespace MonoGame.Base.Graphics
 {
     public class SpriteBatch : Microsoft.Xna.Framework.Graphics.SpriteBatch, ISpriteBatch
     {
-        public SpriteBatch(GraphicsDevice device) : base(device)
+        public SpriteBatch(MSGraphicsDevice device) : base(device)
         {
 
         }

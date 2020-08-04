@@ -6,8 +6,6 @@ using System.Collections.Generic;
 
 namespace MonoGame.Base.Components
 {
-
-
     public class SpriteBatchComponent : DrawableGameComponent, ISpriteBatchComponent
     {
 
@@ -38,7 +36,7 @@ namespace MonoGame.Base.Components
             var sprite = drawable as ISprite;
             if (sprite != null)
             {
-                sprite.SpriteBatch = _spriteBatch;
+                sprite.SpriteBatch = SpriteBatch;
             }
 
             Drawables.Add(drawable);
@@ -68,6 +66,8 @@ namespace MonoGame.Base.Components
         protected List<IDrawable> Drawables { get; set; }
 
         protected List<IUpdateable> Updateables { get; set; }
+
+        public ISpriteBatch SpriteBatch => _spriteBatch;
 
         //public override void Update(GameTime gameTime)
         //{
@@ -102,7 +102,7 @@ namespace MonoGame.Base.Components
 
         public override void Draw(GameTime gameTime)
         {
-            _spriteBatch.Begin(Options.SpriteSortMode, Options.BlendState, Options.SamplerState, Options.DepthStencilState, Options.RasterizerState, Options.Effect, Options.TransformationMatrix);
+            SpriteBatch.Begin(Options.SpriteSortMode, Options.BlendState, Options.SamplerState, Options.DepthStencilState, Options.RasterizerState, Options.Effect, Options.TransformationMatrix);
 
             foreach (var item in Drawables)
             {
@@ -112,7 +112,7 @@ namespace MonoGame.Base.Components
                 }
             }
 
-            _spriteBatch.End();
+            SpriteBatch.End();
 
             base.Draw(gameTime);
         }

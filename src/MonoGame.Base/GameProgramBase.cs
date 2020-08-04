@@ -8,7 +8,7 @@ namespace Monogame.Base
         {
             var factory = GetServiceProviderFactory();
             using (var game = GetGame(factory))
-            {
+            {                
                 game.Run();
             }
         }
