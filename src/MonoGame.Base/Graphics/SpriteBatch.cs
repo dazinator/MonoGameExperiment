@@ -12,6 +12,11 @@ namespace MonoGame.Base.Graphics
 
         }
 
+        public void Begin(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null)
+        {
+            Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect.Unwrapped, transformMatrix);
+        }
+
         public void Draw(ITexture2D texture, Vector2 position, Color color)
         {
             texture.Draw(this, position, color);          

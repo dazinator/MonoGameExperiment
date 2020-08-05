@@ -9,8 +9,11 @@ namespace MonoGame.Base.Graphics
         void Clear(Color color);
         void Clear(ClearOptions options, Color color, float depth, int stencil);
         void Clear(ClearOptions options, Vector4 color, float depth, int stencil);
-        PresentationParameters PresentationParameters { get;}
+        PresentationParameters PresentationParameters { get; }
         RenderTarget2D CreateRenderTarget(int width, int height);
-      
+        RenderTarget2D CreateRenderTarget(int width, int height, bool mipMap, SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat);
+        Viewport Viewport { get; set; }
+        BasicEffect CreateBasicEffect();
+        OcclusionQuery CreateOcclusionQuery();
     }
 }

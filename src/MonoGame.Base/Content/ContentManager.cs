@@ -1,8 +1,8 @@
 ﻿using MonoGame.Base.Graphics;
+using MSEffect = Microsoft.Xna.Framework.Graphics.Effect;
 
 namespace MonoGame.Base.Content
 {
-
     public class ContentManager : IContentManager
     {
         private readonly Microsoft.Xna.Framework.Content.ContentManager _contentManager;
@@ -14,28 +14,20 @@ namespace MonoGame.Base.Content
 
         public ISpriteFont LoadSpriteFont(string assetName)
         {
-            try
-            {
-                var font = _contentManager.Load<Microsoft.Xna.Framework.Graphics.SpriteFont>(assetName);
-                return new SpriteFont(font);
-            }
-            catch (System.Exception ex)
-            {
-                throw;
-            }
+            var font = _contentManager.Load<Microsoft.Xna.Framework.Graphics.SpriteFont>(assetName);
+            return new Graphics.SpriteFont(font);
         }
 
         public ITexture2D LoadTexture2D(string assetName)
         {
-            try
-            {
-                var texture = _contentManager.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(assetName);
-                return new Texture2D(texture);
-            }
-            catch (System.Exception ex)
-            {
-                throw;
-            }
+            var texture = _contentManager.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(assetName);
+            return new Texture2D(texture);
+        }
+
+        public Effect LoadEffect(string assetName)
+        {
+            var effect = _contentManager.Load<MSEffect>(assetName);
+            return new Effect(effect);
         }
     }
 }
