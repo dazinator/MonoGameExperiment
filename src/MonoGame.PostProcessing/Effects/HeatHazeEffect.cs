@@ -1,17 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
 using MonoGame.PostProcessing.Process;
 
 namespace MonoGame.PostProcessing.Effects
 {
     public class HeatHazeEffect : BasePostProcessingEffect
     {
-        public BumpmapDistort distort;
+        public BumpmapDistort BumpmapDistort { get; set; }
 
-        public HeatHazeEffect(Game game, string bumpasset, bool high) : base(game)
+        public HeatHazeEffect(IContentManager contentManager, IGraphicsDevice device, ISpriteBatch spriteBatch, string bumpasset, bool high) : base(device, spriteBatch)
         {
-            distort = new BumpmapDistort(game, bumpasset, high);
-
-            AddPostProcess(distort);
+            BumpmapDistort = new BumpmapDistort(contentManager, device, spriteBatch, bumpasset, high);
+            AddPostProcess(BumpmapDistort);
         }
     }
 }

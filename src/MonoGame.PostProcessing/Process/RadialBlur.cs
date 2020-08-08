@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
 
 namespace MonoGame.PostProcessing.Process
@@ -8,19 +9,22 @@ namespace MonoGame.PostProcessing.Process
     {
         public float Scale;
 
-        public RadialBlur(IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float scale) : base(graphicsDevice, spriteBatch)
+        public RadialBlur(IContentManager content, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float scale) : base(graphicsDevice, spriteBatch)
         {
+            Content = content;
             Scale = scale;
         }
 
+        public IContentManager Content { get; }
+
         public override void Draw(GameTime gameTime)
         {
-            if (effect == null)
-                effect = Game.Content.Load<Effect>("Shaders/RadialBlur");
+            if (Effect == null)
+                Effect = Content.LoadEffect("Shaders/RadialBlur");
 
 
-            effect.Parameters["radialBlurScaleFactor"].SetValue(Scale);
-            effect.Parameters["windowSize"].SetValue(new Vector2(BackBuffer.Height, BackBuffer.Width));
+            Effect.Parameters["radialBlurScaleFactor"].SetValue(Scale);
+            Effect.Parameters["windowSize"].SetValue(new Vector2(BackBuffer.Height, BackBuffer.Width));
 
             // Set Params.
             base.Draw(gameTime);

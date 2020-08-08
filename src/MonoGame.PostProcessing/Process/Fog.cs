@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
+using MonoGame.PostProcessing.Effects;
 
 namespace MonoGame.PostProcessing.Process
 {
@@ -10,24 +12,29 @@ namespace MonoGame.PostProcessing.Process
         public float FogRange;
         public Color FogColor;
 
-        public Fog(IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float distance, float range, Color color) : base(graphicsDevice, spriteBatch)
+        public Fog(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, ICamera camera, float distance, float range, Color color) : base(graphicsDevice, spriteBatch)
         {
+            ContentManager = contentManager;
+            Camera = camera;
             FogDistance = distance;
             FogRange = range;
             FogColor = color;
         }
 
+        public IContentManager ContentManager { get; }
+        public ICamera Camera { get; }
+
         public override void Draw(GameTime gameTime)
         {
-            if (effect == null)
-                effect = Game.Content.Load<Effect>("Shaders/Fog");
+            if (Effect == null)
+                Effect = ContentManager.LoadEffect("Shaders/Fog");
 
-            effect.Parameters["depthMap"].SetValue(DepthBuffer);
-            effect.Parameters["camMin"].SetValue(camera.Viewport.MinDepth);
-            effect.Parameters["camMax"].SetValue(camera.Viewport.MaxDepth);
-            effect.Parameters["fogDistance"].SetValue(FogDistance);
-            effect.Parameters["fogRange"].SetValue(FogRange);
-            effect.Parameters["fogColor"].SetValue(FogColor.ToVector4());
+            DepthBuffer.SetEffect(Effect.Parameters["depthMap"]);
+            Effect.Parameters["camMin"].SetValue(Camera.Viewport.MinDepth);
+            Effect.Parameters["camMax"].SetValue(Camera.Viewport.MaxDepth);
+            Effect.Parameters["fogDistance"].SetValue(FogDistance);
+            Effect.Parameters["fogRange"].SetValue(FogRange);
+            Effect.Parameters["fogColor"].SetValue(FogColor.ToVector4());
 
             // Set Params.
             base.Draw(gameTime);

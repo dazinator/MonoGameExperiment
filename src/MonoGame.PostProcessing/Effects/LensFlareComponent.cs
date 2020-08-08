@@ -1,9 +1,19 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
 
 namespace MonoGame.PostProcessing.Effects
 {
+
+    public interface ICamera
+    {
+        Matrix View { get; }
+        Matrix Projection { get; }
+        Viewport Viewport { get; set; }
+        Vector3 Position { get; set; }
+    }
     /// <summary>
     /// Reusable component for drawing a lensflare effect over the top of a 3D scene.
     /// </summary>
@@ -38,9 +48,9 @@ namespace MonoGame.PostProcessing.Effects
 
 
         // Graphics objects.
-        Texture2D glowSprite;
-        SpriteBatch spriteBatch;
-        BasicEffect basicEffect;
+        ITexture2D glowSprite;
+        // ISpriteBatch spriteBatch;
+        Base.Graphics.BasicEffect basicEffect;
         VertexPositionColor[] queryVertices;
 
 
@@ -52,7 +62,7 @@ namespace MonoGame.PostProcessing.Effects
 
 
         // An occlusion query is used to detect when the sun is hidden behind scenery.
-        OcclusionQuery occlusionQuery;
+        Base.Graphics.OcclusionQuery occlusionQuery;
         bool occlusionQueryActive;
         float occlusionAlpha;
 
@@ -74,7 +84,7 @@ namespace MonoGame.PostProcessing.Effects
             public float Scale;
             public Color Color;
             public string TextureName;
-            public Texture2D Texture;
+            public ITexture2D Texture;
         }
 
 
@@ -102,6 +112,11 @@ namespace MonoGame.PostProcessing.Effects
             new Flare( 2.0f, 1.4f, new Color( 25,  50, 100), "Textures/flare3"),
         };
 
+        public new IGraphicsDevice GraphicsDevice { get; }
+        public ISpriteBatch SpriteBatch { get; }
+        public IContentManager ContentManager { get; }
+        public ICamera Camera { get; }
+
 
         #endregion
 
@@ -111,9 +126,19 @@ namespace MonoGame.PostProcessing.Effects
         /// <summary>
         /// Constructs a new lensflare component.
         /// </summary>
-        public LensFlareComponent(Game game)
+        /// <param name="contentManager"></param>
+        /// <param name="spriteBatch">Sprite batch used for drawing. Begin() should already be called on it prior to calling Draw() on this component. </param>
+        public LensFlareComponent(Game game,
+            IGraphicsDevice graphicsDevice,
+            ISpriteBatch spriteBatch,
+            IContentManager contentManager,
+            ICamera camera)
             : base(game)
         {
+            GraphicsDevice = graphicsDevice;
+            SpriteBatch = spriteBatch;
+            ContentManager = contentManager;
+            Camera = camera;
         }
 
 
@@ -123,18 +148,18 @@ namespace MonoGame.PostProcessing.Effects
         protected override void LoadContent()
         {
             // Create a SpriteBatch for drawing the glow and flare sprites.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            // spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Load the glow and flare textures.
-            glowSprite = Game.Content.Load<Texture2D>("Textures/glow");
+            glowSprite = ContentManager.LoadTexture2D("Textures/glow");
 
-            foreach (Flare flare in flares)
+            foreach (var flare in flares)
             {
-                flare.Texture = Game.Content.Load<Texture2D>(flare.TextureName);
+                flare.Texture = ContentManager.LoadTexture2D(flare.TextureName);
             }
 
             // Effect for drawing occlusion query polygons.
-            basicEffect = new BasicEffect(GraphicsDevice);
+            basicEffect = GraphicsDevice.CreateBasicEffect();
             // Camera cam = (Camera)this.Game.Services.GetService(typeof(Camera));
             basicEffect.View = Matrix.Identity;
             basicEffect.VertexColorEnabled = true;
@@ -148,7 +173,7 @@ namespace MonoGame.PostProcessing.Effects
             queryVertices[3].Position = new Vector3(querySize / 2, querySize / 2, -1);
 
             // Create the occlusion query object.
-            occlusionQuery = new OcclusionQuery(GraphicsDevice);
+            occlusionQuery = GraphicsDevice.CreateOcclusionQuery();
         }
 
 
@@ -209,14 +234,13 @@ namespace MonoGame.PostProcessing.Effects
             // was moving, but the light was infinitely far away. If our flares came
             // from a local object rather than the sun, we would use the original view
             // matrix here.
-            IPlayerRenderer playerRenderer = (IPlayerRenderer)this.Game.Services.GetService(typeof(IPlayerRenderer));
-            Matrix infiniteView = playerRenderer.Camera.View;
+            // IPlayerRenderer playerRenderer = (IPlayerRenderer)this.Game.Services.GetService(typeof(IPlayerRenderer));
+            Matrix infiniteView = Camera.View;
             infiniteView.Translation = Vector3.Zero;
 
             // Project the light position into 2D screen space.
             Viewport viewport = GraphicsDevice.Viewport;
-            Vector3 projectedPosition = viewport.Project(-LightDirection, playerRenderer.Camera.Projection,
-                infiniteView, Matrix.Identity);
+            Vector3 projectedPosition = viewport.Project(-LightDirection, Camera.Projection, infiniteView, Matrix.Identity);
 
             // Don't draw any flares if the light is behind the camera.
             if ((projectedPosition.Z < 0) || (projectedPosition.Z > 1))
@@ -248,9 +272,9 @@ namespace MonoGame.PostProcessing.Effects
             GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
 
             // Set up our BasicEffect to center on the current 2D light position.
-            basicEffect.World = Matrix.CreateTranslation(lightPosition.X,
-                lightPosition.Y, 0);
+            basicEffect.World = Matrix.CreateTranslation(lightPosition.X, lightPosition.Y, 0);
 
+            // TODO: reinstantiate this projection only when viewport size changes..
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0,
                 viewport.Width,
                 viewport.Height,
@@ -281,12 +305,13 @@ namespace MonoGame.PostProcessing.Effects
             Vector2 origin = new Vector2(glowSprite.Width, glowSprite.Height) / 2;
             float scale = glowSize * 2 / glowSprite.Width;
 
-            spriteBatch.Begin();
+            // We should already be in a batch..
+            //spriteBatch.Begin();
 
-            spriteBatch.Draw(glowSprite, lightPosition, null, color, 0,
+            SpriteBatch.Draw(glowSprite, lightPosition, null, color, 0,
                 origin, scale, SpriteEffects.None, 0);
 
-            spriteBatch.End();
+            // spriteBatch.End();
         }
 
 
@@ -303,12 +328,17 @@ namespace MonoGame.PostProcessing.Effects
 
             // Lensflare sprites are positioned at intervals along a line that
             // runs from the 2D light position toward the center of the screen.
+            //TODO: Reinstatiate this only when viewport size changes.
             Vector2 screenCenter = new Vector2(viewport.Width, viewport.Height) / 2;
 
             Vector2 flareVector = screenCenter - lightPosition;
 
             // Draw the flare sprites using additive blending.
-            spriteBatch.Begin(0, BlendState.Additive);
+            // TODO: We don't know if current sprite batch is in correct mode, so we have to end existing batch,
+            // and begin a new batch, and then we have the problem that we don't know how to Begin() afterwards again to get back the intial
+            // state for anything else that follows. Perhaps better to use a seperate sprite batch instance for drawing flares?
+            SpriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
 
             foreach (Flare flare in flares)
             {
@@ -325,12 +355,15 @@ namespace MonoGame.PostProcessing.Effects
                     flare.Texture.Height) / 2;
 
                 // Draw the flare.
-                spriteBatch.Draw(flare.Texture, flarePosition, null,
+                SpriteBatch.Draw(flare.Texture, flarePosition, null,
                     new Color(flareColor), 1, flareOrigin,
                     flare.Scale, SpriteEffects.None, 0);
             }
 
-            spriteBatch.End();
+            // TODO: restore previous state.
+            // Note we don't know how to call begin to mirror how it was called originally!
+            SpriteBatch.End();
+            SpriteBatch.Begin();
         }
 
 

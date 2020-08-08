@@ -11,14 +11,14 @@ namespace MonoGame.Base.Graphics
 
         public Texture2D(MsTexture2D texture2d)
         {
-            Texture2d = texture2d;
+            Unwrapped = texture2d;
         }
 
         public Rectangle Bounds
         {
             get
             {
-                return Texture2d.Bounds;
+                return Unwrapped.Bounds;
             }
         }
 
@@ -26,7 +26,7 @@ namespace MonoGame.Base.Graphics
         {
             get
             {
-                return Texture2d.Height;
+                return Unwrapped.Height;
             }
         }
 
@@ -34,63 +34,63 @@ namespace MonoGame.Base.Graphics
         {
             get
             {
-                return Texture2d.Width;
+                return Unwrapped.Width;
             }
         }
 
         public void GetData<T>(T[] data) where T : struct
         {
-            Texture2d.GetData<T>(data);
+            Unwrapped.GetData<T>(data);
         }
 
         public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
-            Texture2d.GetData<T>(data, startIndex, elementCount);
+            Unwrapped.GetData<T>(data, startIndex, elementCount);
         }
 
         public void GetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
         {
-            Texture2d.GetData<T>(level, rect, data, startIndex, elementCount);
+            Unwrapped.GetData<T>(level, rect, data, startIndex, elementCount);
         }
 
         public void GetData<T>(int level, int arraySlice, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
         {
-            Texture2d.GetData<T>(level, arraySlice, rect, data, startIndex, elementCount);
+            Unwrapped.GetData<T>(level, arraySlice, rect, data, startIndex, elementCount);
         }
 
         public void Reload(Stream textureStream)
         {
-            Texture2d.Reload(textureStream);
+            Unwrapped.Reload(textureStream);
         }
 
         public void SaveAsJpeg(Stream stream, int width, int height)
         {
-            Texture2d.SaveAsJpeg(stream, width, height);
+            Unwrapped.SaveAsJpeg(stream, width, height);
         }
 
         public void SaveAsPng(Stream stream, int width, int height)
         {
-            Texture2d.SaveAsPng(stream, width, height);
+            Unwrapped.SaveAsPng(stream, width, height);
         }
 
         public void SetData<T>(T[] data) where T : struct
         {
-            Texture2d.SetData(data);
+            Unwrapped.SetData(data);
         }
 
         public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
-            Texture2d.SetData(data, startIndex, elementCount);
+            Unwrapped.SetData(data, startIndex, elementCount);
         }
 
         public void SetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
         {
-            Texture2d.SetData(level, rect, data, startIndex, elementCount);
+            Unwrapped.SetData(level, rect, data, startIndex, elementCount);
         }
 
         public void SetData<T>(int level, int arraySlice, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
         {
-            Texture2d.SetData(level, arraySlice, rect, data, startIndex, elementCount);
+            Unwrapped.SetData(level, arraySlice, rect, data, startIndex, elementCount);
         }
 
         public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Vector2 position, Color color)
@@ -128,9 +128,14 @@ namespace MonoGame.Base.Graphics
             spriteBatch.Draw(Unwrapped, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
         }
 
-        protected virtual MsTexture2D Unwrapped { get { return Texture2d; } }
+        public void SetEffect(EffectParameter parameter)
+        {
+            parameter.SetValue(this.Unwrapped);
+        }
 
-        internal MsTexture2D Texture2d { get => _texture2d; set => _texture2d = value; }
+        // protected virtual MsTexture2D Unwrapped { get { return Unwrapped; } }
+
+        internal MsTexture2D Unwrapped { get => _texture2d; set => _texture2d = value; }
 
 
         //public static implicit operator Texture2DWrapper(Texture2D texture2d)  // implicit texture2d to Texture2DWrapper conversion operator

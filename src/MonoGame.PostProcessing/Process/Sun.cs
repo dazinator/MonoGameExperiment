@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
+using MonoGame.PostProcessing.Effects;
 using BasicEffect = MonoGame.Base.Graphics.BasicEffect;
 using OcclusionQuery = MonoGame.Base.Graphics.OcclusionQuery;
 
@@ -39,10 +40,12 @@ namespace MonoGame.PostProcessing.Process
         };
 
         public IContentManager ContentManager { get; }
+        public ICamera Camera { get; }
 
-        public Sun(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, Vector3 position) : base(graphicsDevice, spriteBatch)
+        public Sun(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, ICamera camera, Vector3 position) : base(graphicsDevice, spriteBatch)
         {
             ContentManager = contentManager;
+            Camera = camera;
             Position = position;
 
             // Effect for drawing occlusion query polygons.
@@ -64,19 +67,29 @@ namespace MonoGame.PostProcessing.Process
 
         }
 
+        public ITexture2D FlareTexture { get; set; } = null;
+
         public override void Draw(GameTime gameTime)
         {
+            // TODO: Move these to load content..
             if (Effect == null)
+            {
                 Effect = ContentManager.LoadEffect("Shaders/Sun");
+            }              
+
+            if(FlareTexture == null)
+            {
+                FlareTexture = ContentManager.LoadTexture2D("Textures/flare");
+            }
 
             UpdateOcclusion();
 
             Color.A = Convert.ToByte(MathHelper.Clamp(occlusionAlpha, 0, 255));
 
             if (this.lightBehindCamera) return;
-
-            Effect.Parameters["depthMap"].SetValue(DepthBuffer);
-            Effect.Parameters["cameraPosition"].SetValue(camera.Position);
+            DepthBuffer.SetEffect(Effect.Parameters["depthMap"]);
+            
+            Effect.Parameters["cameraPosition"].SetValue(Camera.Position);
             Effect.Parameters["lightPosition"].SetValue(Position);
             // System.Diagnostics.Debug.WriteLine("Position: " + Position.ToString());
             Effect.Parameters["Color"].SetValue(Color.ToVector3());
@@ -87,8 +100,9 @@ namespace MonoGame.PostProcessing.Process
             // System.Diagnostics.Debug.WriteLine("Sun Size: " + Size);
             // effect.Parameters["lightPosition"].SetValue(Position);
 
-            Effect.Parameters["VP"].SetValue(camera.View * camera.Projection);
-            Effect.Parameters["flare"].SetValue(Game.Content.Load<Texture2D>("Textures/flare"));
+            Effect.Parameters["VP"].SetValue(Camera.View * Camera.Projection);
+
+            FlareTexture.SetEffect(Effect.Parameters["flare"]);           
 
             // Set Params.
             base.Draw(gameTime);

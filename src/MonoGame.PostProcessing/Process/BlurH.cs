@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
 using MonoGame.PostProcessing;
 
@@ -8,20 +9,23 @@ namespace MonoGame.PostProcessing.Process
     public class BlurH : BasePostProcess
     {
         float blurAmount = 1;
-        public BlurH(IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float amount) : base(graphicsDevice, spriteBatch)
+        public BlurH(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float amount) : base(graphicsDevice, spriteBatch)
         {
+            ContentManager = contentManager;
             blurAmount = amount;
         }
 
+        public IContentManager ContentManager { get; }
+
         public override void Draw(GameTime gameTime)
         {
-            if (effect == null)
+            if (Effect == null)
             {
-                effect = Game.Content.Load<Effect>("Shaders/blur");
-                effect.CurrentTechnique = effect.Techniques["BlurH"];
+                Effect = ContentManager.LoadEffect("Shaders/blur");
+                Effect.CurrentTechnique = Effect.Techniques["BlurH"];
             }
 
-            effect.Parameters["g_BlurAmount"].SetValue(blurAmount);
+            Effect.Parameters["g_BlurAmount"].SetValue(blurAmount);
 
             // Set Params.
             base.Draw(gameTime);

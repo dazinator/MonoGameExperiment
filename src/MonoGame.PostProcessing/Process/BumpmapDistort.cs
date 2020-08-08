@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
 
 namespace MonoGame.PostProcessing.Process
@@ -10,33 +11,46 @@ namespace MonoGame.PostProcessing.Process
         public bool High = true;
         public string BumpAsset;
 
-        public BumpmapDistort(IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, string bumpAsset, bool high) : base(graphicsDevice, spriteBatch)
+        public IContentManager ContentManager { get; }
+
+        public ITexture2D BumpmapTexture { get; set; }
+
+        public BumpmapDistort(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, string bumpAsset, bool high) : base(graphicsDevice, spriteBatch)
         {
+            ContentManager = contentManager;
             BumpAsset = bumpAsset;
             High = high;
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (effect == null)
+            if (Effect == null)
             {
-                effect = Game.Content.Load<Effect>("Shaders/BumpMapDistort");
+                Effect = ContentManager.LoadEffect("Shaders/BumpMapDistort");
+            }
+            if(BumpmapTexture == null)
+            {
+                BumpmapTexture = ContentManager.LoadTexture2D(BumpAsset);
             }
 
             if (High)
-                effect.CurrentTechnique = effect.Techniques["High"];
+            {
+                Effect.CurrentTechnique = Effect.Techniques["High"];
+            }               
             else
-                effect.CurrentTechnique = effect.Techniques["Low"];
+            {
+                Effect.CurrentTechnique = Effect.Techniques["Low"];
+            }               
 
             elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (elapsedTime >= 10.0f)
                 elapsedTime = 0.0f;
 
-            effect.Parameters["Offset"].SetValue((float)elapsedTime * .1f);
-            effect.Parameters["Bumpmap"].SetValue(Game.Content.Load<Texture2D>(BumpAsset));
+            Effect.Parameters["Offset"].SetValue((float)elapsedTime * .1f);
+            BumpmapTexture.SetEffect(Effect.Parameters["Bumpmap"]);
 
-            effect.Parameters["halfPixel"].SetValue(HalfPixel);
+            Effect.Parameters["halfPixel"].SetValue(HalfPixel);
 
             // Set Params.
             base.Draw(gameTime);

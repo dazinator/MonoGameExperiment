@@ -1,4 +1,5 @@
-﻿using MSBasicEffect = Microsoft.Xna.Framework.Graphics.BasicEffect;
+﻿using Microsoft.Xna.Framework;
+using MSBasicEffect = Microsoft.Xna.Framework.Graphics.BasicEffect;
 
 namespace MonoGame.Base.Graphics
 {
@@ -9,6 +10,29 @@ namespace MonoGame.Base.Graphics
 
         }
 
+        public Matrix View
+        {
+            get { return Unwrapped.View; }
+            set { Unwrapped.View = value; }
+        }
+
+        public bool VertexColorEnabled
+        {
+            get { return Unwrapped.VertexColorEnabled; }
+            set { Unwrapped.VertexColorEnabled = value; }
+        }
+
+        public Matrix World
+        {
+            get { return Unwrapped.World; }
+            set { Unwrapped.World = value; }
+        }
+
+        public Matrix Projection
+        {
+            get { return Unwrapped.Projection; }
+            set { Unwrapped.Projection = value; }
+        }
         internal new MSBasicEffect Unwrapped { get; }
     }
 }

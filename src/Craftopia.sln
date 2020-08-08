@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CraftopiaCore", "CraftopiaC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Base", "MonoGame.Base\MonoGame.Base.csproj", "{0D9F980B-DBFF-43B8-B36B-9019F7F8965C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.PostProcessing", "MonoGame.PostProcessing\MonoGame.PostProcessing.csproj", "{0F1F4225-2001-46B6-BA6F-A1E3B7483166}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.PostProcessing", "MonoGame.PostProcessing\MonoGame.PostProcessing.csproj", "{0F1F4225-2001-46B6-BA6F-A1E3B7483166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

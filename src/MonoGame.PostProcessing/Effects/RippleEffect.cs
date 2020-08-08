@@ -1,17 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
 using MonoGame.PostProcessing.Process;
 
 namespace MonoGame.PostProcessing.Effects
 {
     public class RippleEffect : BasePostProcessingEffect
     {
-        public Ripple r;
+        public Ripple Ripple { get; set; }
 
-        public RippleEffect(Game game) : base(game)
+        public RippleEffect(IContentManager contentManager, IGraphicsDevice device, ISpriteBatch spriteBatch) : base(device, spriteBatch)
         {
-            r = new Ripple(game);
-
-            AddPostProcess(r);
+            Ripple = new Ripple(contentManager, device, spriteBatch);
+            AddPostProcess(Ripple);
         }
     }
 }

@@ -61,10 +61,32 @@ namespace MonoGame.Base.Graphics
             return new OcclusionQuery(new MSOcclusionQuery(Unwrapped));
         }
 
+        public void DrawUserPrimitives(PrimitiveType primitiveType, VertexPositionColor[] vertextData, int vertextOffset, int primitiveCount)
+        {
+            Unwrapped.DrawUserPrimitives(primitiveType, vertextData, vertextOffset, primitiveCount);
+        }
+
         public Viewport Viewport
         {
             get { return Unwrapped.Viewport; }
             set { Unwrapped.Viewport = value; }
+        }
+
+        public BlendState BlendState
+        {
+            get { return Unwrapped.BlendState; }
+            set { Unwrapped.BlendState = value; }
+        }
+
+        public DepthStencilState DepthStencilState
+        {
+            get { return Unwrapped.DepthStencilState; }
+            set { Unwrapped.DepthStencilState = value; }
+        }
+
+        public SamplerStateCollection SamplerStates
+        {
+            get { return Unwrapped.SamplerStates; }           
         }
 
     }

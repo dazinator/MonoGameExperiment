@@ -26,11 +26,11 @@ namespace MonoGame.PostProcessing.Process
         public override void Draw(GameTime gameTime)
         {
             if (Effect == null)
-                Effect = ContentManager.Load<Effect>("Shaders/PoissonDiscBlur");
+                Effect = ContentManager.LoadEffect("Shaders/PoissonDiscBlur");
 
-            effect.Parameters["Taps"].SetValue(taps);
-            effect.Parameters["DiscRadius"].SetValue(5);
-            effect.Parameters["TexelSize"].SetValue(HalfPixel);
+            Effect.Parameters["Taps"].SetValue(taps);
+            Effect.Parameters["DiscRadius"].SetValue(5);
+            Effect.Parameters["TexelSize"].SetValue(HalfPixel);
 
             // Set Params.
             base.Draw(gameTime);

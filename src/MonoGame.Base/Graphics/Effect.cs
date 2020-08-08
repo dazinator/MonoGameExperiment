@@ -1,9 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using MSEffect = Microsoft.Xna.Framework.Graphics.Effect;
+using MSEffectParameterCollection = Microsoft.Xna.Framework.Graphics.EffectParameterCollection;
 
 namespace MonoGame.Base.Graphics
 {
+
+
+    //public class EffectParameterCollection : MSEffectParameterCollection
+    //{
+
+    //}
+
     public class Effect : IDisposable
     {
         public Effect(MSEffect effect)

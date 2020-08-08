@@ -15,7 +15,7 @@ namespace MonoGame.Base.Components
 
         public RasterizerState RasterizerState { get; set; } = null;
 
-        public Effect Effect { get; set; } = null;
+        public MonoGame.Base.Graphics.Effect Effect { get; set; } = null;
 
         public Matrix? TransformationMatrix { get; set; } = null;
 

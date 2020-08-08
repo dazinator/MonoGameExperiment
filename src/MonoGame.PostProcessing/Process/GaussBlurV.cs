@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
 
 namespace MonoGame.PostProcessing.Process
@@ -12,6 +14,13 @@ namespace MonoGame.PostProcessing.Process
 
         private const int Sample_Count = 11;
 
+
+        public GaussBlurV(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float amount) : base(graphicsDevice, spriteBatch)
+        {
+            ContentManager = contentManager;
+            blurAmount = amount;
+        }
+
         protected float blurAmount;
         public float BlurAmount
         {
@@ -20,31 +29,28 @@ namespace MonoGame.PostProcessing.Process
             {
                 blurAmount = value;
                 if (sampleOffsetsVert != null)
-                    SetBlurEffectParameters(0, 1.0f / (float)(this.Game.GraphicsDevice.Viewport.Height / 2f), ref sampleOffsetsVert, ref sampleWeightsVert);
+                    SetBlurEffectParameters(0, 1.0f / (float)(GraphicsDevice.Viewport.Height / 2f), ref sampleOffsetsVert, ref sampleWeightsVert);
             }
         }
 
-        public GaussBlurV(IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float amount) : base(graphicsDevice, spriteBatch)
-        {
-            blurAmount = amount;
-        }
+        public IContentManager ContentManager { get; }
 
         public override void Draw(GameTime gameTime)
         {
-            if (effect == null)
+            if (Effect == null)
             {
-                effect = Game.Content.Load<Effect>("Shaders/GaussianBlur");
+                Effect = ContentManager.LoadEffect("Shaders/GaussianBlur");
 
                 sampleOffsetsVert = new Vector4[Sample_Count];
 
                 sampleWeightsVert = new float[Sample_Count];
 
-                SetBlurEffectParameters(0, 1.0f / (float)(this.Game.GraphicsDevice.Viewport.Height / 2f), ref sampleOffsetsVert, ref sampleWeightsVert);
+                SetBlurEffectParameters(0, 1.0f / (float)(GraphicsDevice.Viewport.Height / 2f), ref sampleOffsetsVert, ref sampleWeightsVert);
 
             }
 
-            effect.Parameters["SampleOffsets"].SetValue(sampleOffsetsVert);
-            effect.Parameters["SampleWeights"].SetValue(sampleWeightsVert);
+            Effect.Parameters["SampleOffsets"].SetValue(sampleOffsetsVert);
+            Effect.Parameters["SampleWeights"].SetValue(sampleWeightsVert);
 
             // Set Params.
             base.Draw(gameTime);

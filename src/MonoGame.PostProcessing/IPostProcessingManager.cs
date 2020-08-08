@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Base.Graphics;
+using MonoGame.PostProcessing.Effects;
 using System.Collections.Generic;
 
 namespace MonoGame.PostProcessing

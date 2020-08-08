@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
 
 namespace MonoGame.PostProcessing.Process
@@ -12,8 +13,9 @@ namespace MonoGame.PostProcessing.Process
 
         private const int Sample_Count = 11;
 
-        public GaussBlurH(IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float amount) : base(graphicsDevice, spriteBatch)
+        public GaussBlurH(IContentManager contentManager, IGraphicsDevice graphicsDevice, ISpriteBatch spriteBatch, float amount) : base(graphicsDevice, spriteBatch)
         {
+            ContentManager = contentManager;
             blurAmount = amount;
         }
 
@@ -26,28 +28,28 @@ namespace MonoGame.PostProcessing.Process
             {
                 blurAmount = value;
                 if (sampleOffsetsHoriz != null)
-                    SetBlurEffectParameters(1.0f / (float)(this.Game.GraphicsDevice.Viewport.Width / 2f), 0, ref sampleOffsetsHoriz, ref sampleWeightsHoriz);
+                    SetBlurEffectParameters(1.0f / (float)(GraphicsDevice.Viewport.Width / 2f), 0, ref sampleOffsetsHoriz, ref sampleWeightsHoriz);
             }
         }
 
-      
+        public IContentManager ContentManager { get; }
 
         public override void Draw(GameTime gameTime)
         {
-            if (effect == null)
+            if (Effect == null)
             {
-                effect = Game.Content.Load<Effect>("Shaders/GaussianBlur");
+                Effect = ContentManager.LoadEffect("Shaders/GaussianBlur");
 
                 sampleOffsetsHoriz = new Vector4[Sample_Count];
 
                 sampleWeightsHoriz = new float[Sample_Count];
 
-                SetBlurEffectParameters(1.0f / (float)(this.Game.GraphicsDevice.Viewport.Width / 2f), 0, ref sampleOffsetsHoriz, ref sampleWeightsHoriz);
+                SetBlurEffectParameters(1.0f / (float)(GraphicsDevice.Viewport.Width / 2f), 0, ref sampleOffsetsHoriz, ref sampleWeightsHoriz);
 
             }
 
-            effect.Parameters["SampleOffsets"].SetValue(sampleOffsetsHoriz);
-            effect.Parameters["SampleWeights"].SetValue(sampleWeightsHoriz);
+            Effect.Parameters["SampleOffsets"].SetValue(sampleOffsetsHoriz);
+            Effect.Parameters["SampleWeights"].SetValue(sampleWeightsHoriz);
 
             // Set Params.
             base.Draw(gameTime);

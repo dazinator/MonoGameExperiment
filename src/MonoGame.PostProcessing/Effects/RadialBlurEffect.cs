@@ -1,17 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Base.Content;
+using MonoGame.Base.Graphics;
 using MonoGame.PostProcessing.Process;
 
 namespace MonoGame.PostProcessing.Effects
 {
     public class RadialBlurEffect : BasePostProcessingEffect
     {
-        public RadialBlur rb;
+        public RadialBlur RadialBlur { get; set; }
 
-        public RadialBlurEffect(Game game, float scale) : base(game)
+        public RadialBlurEffect(IContentManager contentManager, IGraphicsDevice device, ISpriteBatch spriteBatch, float scale) : base(device, spriteBatch)
         {
-            rb = new RadialBlur(game, scale);
-
-            AddPostProcess(rb);
+            RadialBlur = new RadialBlur(contentManager, device, spriteBatch, scale);
+            AddPostProcess(RadialBlur);
         }
     }
 }
