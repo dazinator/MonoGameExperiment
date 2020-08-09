@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Base.Content;
 using MonoGame.Base.Graphics;
+using MonoGame.Extended;
 using MonoGame.Extended.Input.InputListeners;
 using System;
 
@@ -37,23 +38,40 @@ namespace Craftopia.Drawable
             _texture = _content.LoadTexture2D("Images/shuttle");  // if you are using your own images.           
         }
 
+        public static int MovementSpeed = 30;
+
         private void KeyboardListener_KeyPressed(object sender, KeyboardEventArgs e)
-        {
+        {           
             switch (e.Key)
             {
                 case Microsoft.Xna.Framework.Input.Keys.Left:
-                    MoveLeft();
+                    Velocity = Velocity.SetX(-MovementSpeed);
+                   // XVelocity = -MovementSpeed;
+                    //  MoveLeft();
                     break;
                 case Microsoft.Xna.Framework.Input.Keys.Right:
-                    MoveRight();
+                    Velocity = Velocity.SetX(MovementSpeed);
+                  
+                    //MoveRight();
                     break;
                 case Microsoft.Xna.Framework.Input.Keys.Up:
-                    MoveUp();
+                    Velocity = Velocity.SetY(-MovementSpeed);
                     break;
                 case Microsoft.Xna.Framework.Input.Keys.Down:
-                    MoveDown();
+                    Velocity = Velocity.SetY(MovementSpeed);
                     break;
             }
+        }
+
+        public Vector2 Velocity { get; set; } = Vector2.Zero;
+       // public int YVelocity { get; set; } = 0;
+
+
+        private void Move()
+        {
+            Position = Position + Velocity;           
+            Velocity = Vector2.Zero;
+            //new Vector2(Position.X, Position.Y + 5);
         }
 
         private void GamePadListener_ButtonDown(object sender, GamePadEventArgs e)
@@ -61,42 +79,24 @@ namespace Craftopia.Drawable
             switch (e.Button)
             {
                 case Microsoft.Xna.Framework.Input.Buttons.DPadLeft:
-                    MoveLeft();
+                    Velocity = Velocity.SetX(-MovementSpeed);
                     break;
                 case Microsoft.Xna.Framework.Input.Buttons.DPadRight:
-                    MoveRight();
+                    Velocity = Velocity.SetX(MovementSpeed);
                     break;
 
                 case Microsoft.Xna.Framework.Input.Buttons.DPadUp:
-                    MoveUp();
+                    Velocity = Velocity.SetY(-MovementSpeed);
                     break;
 
                 case Microsoft.Xna.Framework.Input.Buttons.DPadDown:
-                    MoveDown();
+                    Velocity = Velocity.SetY(MovementSpeed);
                     break;
             }
 
         }
 
-        private void MoveDown()
-        {
-            Position = new Vector2(Position.X, Position.Y + 5);
-        }
-
-        private void MoveUp()
-        {
-            Position = new Vector2(Position.X, Position.Y - 5);
-        }
-
-        private void MoveRight()
-        {
-            Position = new Vector2(Position.X + 5, Position.Y);
-        }
-
-        private void MoveLeft()
-        {
-            Position = new Vector2(Position.X - 5, Position.Y);
-        }
+       // public Vector2 Velocity { get; set; } = Vector2.Zero;
 
         public Color Color { get; set; }
 
@@ -148,6 +148,12 @@ namespace Craftopia.Drawable
         public override void Initialize()
         {
             base.Initialize();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            Move();
         }
 
         public void Draw(GameTime gameTime)
